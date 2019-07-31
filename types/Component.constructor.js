@@ -4,17 +4,19 @@ import rand from '../utilities/rand.func.js'
 function Component(input, def, base_class) {
     let output = [];
     if (typeof input === 'string') {
-       var s = JSON.parse(input); 
-    } 
-
-    if (/*json_last_error() != JSON_ERROR_NONE && */!Array.isArray(input)) { //not sure how to replace it
-
-        if (input) {
-            def["content"] = input;
+        try
+        {
+        var s = JSON.parse(yourJsonString);
         }
-        info(base_class, def);
-
-    }  else if (Array.isArray(input)) {
+        catch(e)
+        {
+            if (input) {
+                def["content"] = input;
+            }
+            info(base_class, def); 
+        }
+    } 
+      else if (typeof input === 'object') {
         
         output = [];
         let i = 0;
@@ -37,11 +39,9 @@ function Component(input, def, base_class) {
         } 
 
     }  else  {      
-        def = def;
-
-        s.forEach(function(value, key){
-            def[key] = value;
-        }) 
+        for(const [key, value] of Object.entries(def)){
+            def.key = value;
+        }
     }
     output["id"] = base_class;
     const id_supply = ['0', '1', '2', '3', '4', '5', '6', '7',
@@ -66,7 +66,7 @@ function Component(input, def, base_class) {
     if (Array.isArray(output["style"])) {
         let style_compiler = "";
         
-        style.forEach(function(value, key){
+        output["style"].forEach(function(value, key){
             key = key.replace("/[&]/", "");
             style_compiler += "#".output["id"]+".{base_class}key{\n"+value+"\n}";
         }) 
@@ -93,7 +93,6 @@ function Component(input, def, base_class) {
         output["script"] = output["script"].replace("/[&]/", '(\'#'+output["id"]+'\')');
         output["script"] = script_compiler;
     }
-    console.log(output);
     return output;
 }
 export default Component;

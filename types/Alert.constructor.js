@@ -25,62 +25,26 @@ function Alert(input = '') {
 		style: '',
 		script: ''
 	}, 'alert');
-	console.log(compiler('alert', [
+	return compiler([
 		{
 			condition: true,
-			line: html(tag, `id="${id}" class="alert" ${template}` +
-				attr_append(attr, { role: 'alert' }))
+			line: html(tag, `id="${id}" class="alert ${template}" `+attr_append(attr, { role: 'alert' }))
 		},
-		{ condition: true, line: content },
-		{
-			condition: dismisable,
-			line: html('button', {
-				type: 'button',
-				class: 'close',
-				'data-dismiss': 'alert',
-				'aria-label': 'Close'
-			}) + html('span', {
-				'aria-hidden': 'true'
-			}) +
-			'&times;' +
-			html('span', '/') +
-			html('button', '/')
-		},
-		{
-			condition: script && script.length > 0,
-			line: html('script') + script + html('script', '/')
-		},
-		{
-			condition: style && style.length > 0,
-			line: html('style') + style + html('style', '/')
-		},
-		{
-			condition: true,
-			line: html(tag, '/')
-		}
-	]));
-	console.error(content);
-	return compiler('alert', [
-		{
-			condition: true,
-			line: html(tag, `id="${id}" class="alert" ${template}` +
-				attr_append(attr, { role: 'alert' }))
-		},
-		{ condition: true, line: content },
-		{
-			condition: dismisable,
-			line: html('button', {
-				type: 'button',
-				class: 'close',
-				'data-dismiss': 'alert',
-				'aria-label': 'Close'
-			}) + html('span', {
-				'aria-hidden': 'true'
-			}) +
-			'&times;' +
-			html('span', '/') +
-			html('button', '/')
-		},
+		{ condition: true, line: content},
+		 {
+		 	condition: dismisable,
+		 	line: html('button', {
+		 		type: 'button',
+		 		class: 'close',
+		 		'data-dismiss': 'alert',
+		 		'aria-label': 'close'
+		 	}) + html('span', {
+		 		'aria-hidden': 'true'
+		 	}) +
+		 	'&times;' +
+		 	html('span', '/') +
+		 	html('button', '/')
+		 },
 		{
 			condition: script && script.length > 0,
 			line: html('script') + script + html('script', '/')

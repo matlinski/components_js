@@ -1,21 +1,14 @@
 function html(tag="div", attr=""){
     let compiler = "";
-    compiler += '<'.tag;
+    compiler += '<'+tag;
     if(tag){
-        if(Array.isArray(attr) && attr[0]){
-            attr.forEach(function(value){
-
-                compiler += ' '+value;
-            })
-        }
-        if(Array.isArray(attr) && !attr[0]){
-            attr.forEach(function(value){
-
+        if(typeof attr === 'object'){
+            for(const [key, value] of Object.entries(attr)){
                 compiler += ' '+key+'=\''+value+'\'';
-            })
+            }
         }
-        if(!Array.isArray(attr) && attr !== "close") {
-            compiler += ' '+attr;
+        if(typeof attr !== 'object' && attr !== "/") {
+                compiler += ' '+attr;
         }
         compiler += '>';
         if(attr === "/") {
@@ -24,7 +17,6 @@ function html(tag="div", attr=""){
         if(tag === "/") {
             compiler = '</div>';
         }
-        console.log(compiler);        
         return compiler;
     }
 }
