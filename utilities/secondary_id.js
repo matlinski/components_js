@@ -10,6 +10,7 @@ function secondary_id(){
     for(let i = 0; i < 5; i++) {
         secondary_id += id_supply[rand(0, id_supply.lenght - 1) ];
     }
+    console.log(secondary_id);
     return secondary_id;
 }
 export default secondary_id;

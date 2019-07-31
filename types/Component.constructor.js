@@ -1,106 +1,99 @@
-import * as info from '../utilities/info.js'
-import * as rand from '../utilities/rand.func.js'
+import info from '../utilities/info.js'
+import rand from '../utilities/rand.func.js'
 
 function Component(input, def, base_class) {
-
+    let output = [];
     if (typeof input === 'string') {
        var s = JSON.parse(input); 
     } 
 
-    if (json_last_error() != JSON_ERROR_NONE && !Array.isArray(input)) { //not sure how to replace it
-        settings = def;
+    if (/*json_last_error() != JSON_ERROR_NONE && */!Array.isArray(input)) { //not sure how to replace it
 
         if (input) {
-            settings["content"] = input;
+            def["content"] = input;
         }
-        info(base_class, settings);
+        info(base_class, def);
 
     }  else if (Array.isArray(input)) {
         
         output = [];
-        settings = def;
-        i = 0;
+        let i = 0;
+        for(const [key, value] of Object.entries(def)){
 
-        settings.forEach(function(value, key){
+            if (isNaN(key)) {
 
-            if (!(array_keys(input) !== range(0, count(input) - 1))) {
-
-                if (i >= count(input)) {
+                if (i >= input.length) {
                    break; 
                 }
-                settings[key] = input[i];
+                def[key] = input[i];
                 i++;
 
             }   else    {
 
                 input.forEach (function(v, k){
-                    settings[k] = v;
+                    def[k] = v;
                 }) 
             }
-        }) 
+        } 
 
     }  else  {      
-        settings = def;
+        def = def;
 
         s.forEach(function(value, key){
-            settings[key] = value;
+            def[key] = value;
         }) 
     }
     output["id"] = base_class;
-    id_supply = ['0', '1', '2', '3', '4', '5', '6', '7',
+    const id_supply = ['0', '1', '2', '3', '4', '5', '6', '7',
     '8', '9', 'q', 'w', 'e', 'r', 't', 'y', 'i', 'o', 'p',
     'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'z', 'x',
     'c', 'v', 'b', 'n', 'm', 'Q', 'W', 'E', 'R', 'T', 'Y',
     'U', 'I', 'O', 'P', 'A', 'S', 'D', 'F', 'G', 'H', 'J',
     'K', 'L', 'Z', 'X', 'C', 'V', 'B', 'N', 'M'];
 
-    for(i = 0; i < 8; i++) {
-        output["id"] += id_supply[rand(0, id_supply.lenght - 1)];
+    for(let i = 0; i < 8; i++) {
+        output["id"] += id_supply[rand(0, (id_supply.length - 1))];
     }
     
-    settings.forEach(function(value, key){
-        key = value;
+    for(const [key, value] of Object.entries(def)){
         output[key] = value;
-    }) 
+    } 
 
-    if (trigger_id && trigger_id.lenght > 0) {
+    if (typeof trigger_id !== 'undefined' && trigger_id.length > 0) {
         output["id"] = trigger_id;
     }
 
-    if (is_array(style)) {
-        style_compiler = "";
+    if (Array.isArray(output["style"])) {
+        let style_compiler = "";
         
         style.forEach(function(value, key){
             key = key.replace("/[&]/", "");
             style_compiler += "#".output["id"]+".{base_class}key{\n"+value+"\n}";
         }) 
-        style = style_compiler;
+        output["style"] = style_compiler;
 
     } else {
 
-        style_compiler = "";
-        style = style.replace("/[&]/", "#"+output["id"]+".{base_class}");
-        style_compiler += style;
-        style = style_compiler;
+        let style_compiler = "";
+        output["style"] = output["style"].replace("/[&]/", "#"+output["id"]+".{base_class}");
+        output["style"] = style_compiler;
     }
-    if (Array.isArray(script)) {
-        script_compiler = "";
+    if (Array.isArray(output["script"])) {
+        let script_compiler = "";
         
-        script.forEach(function(value, key){
+        output["script"].forEach(function(value, key){
             key = key.replace("/[&]/", "", );
             script_compiler += '(\'#'+output["id"]+'\')';
         }) 
-        script = script_compiler;
+        output["script"] = script_compiler;
 
     } else {
 
-        script_compiler = "";
-        script = script.replace("/[&]/", '(\'#'+output["id"]+'\')');
-        script_compiler += script;
-        script = script_compiler;
+        let script_compiler = "";
+        output["script"] = output["script"].replace("/[&]/", '(\'#'+output["id"]+'\')');
+        output["script"] = script_compiler;
     }
-    output["style"] = style;
-    output["script"] = script;
+    console.log(output);
     return output;
 }
 export default Component;

@@ -1,5 +1,5 @@
 function html(tag="div", attr=""){
-    compiler = "";
+    let compiler = "";
     compiler += '<'.tag;
     if(tag){
         if(Array.isArray(attr) && attr[0]){
@@ -24,6 +24,7 @@ function html(tag="div", attr=""){
         if(tag === "/") {
             compiler = '</div>';
         }
+        console.log(compiler);        
         return compiler;
     }
 }
