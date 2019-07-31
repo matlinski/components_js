@@ -49,3 +49,4 @@ function attr_append(attr, base_attributes = []) {
         }
         return attr_compiler;
     }
+    export default attr_append;

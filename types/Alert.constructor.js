@@ -1,7 +1,11 @@
 // Dependencies:
 // Component, html, attr_append, Compiler
 /* global Component, html, attr_append, Compiler */
-
+import * as Component from './Component.constructor.js'
+import * as attr_append from '../utilities/attr.append.js'
+import * as Compiler from '../utilities/compiler.js'
+import * as html from '../utilities/html.func.js'
+//import * as Component from '../utilities/secondary_id.js'
 function Alert(input = '') {
 	const {
 		content,

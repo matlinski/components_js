@@ -9,3 +9,4 @@ function compiler(scheme = null){
     })
     return compiler;
 }
+export default compiler;

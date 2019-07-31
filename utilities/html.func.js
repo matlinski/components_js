@@ -27,3 +27,4 @@ function html(tag="div", attr=""){
         return compiler;
     }
 }
+export default html;

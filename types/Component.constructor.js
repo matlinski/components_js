@@ -1,3 +1,6 @@
+import * as info from '../utilities/info.js'
+import * as rand from '../utilities/rand.func.js'
+
 function Component(input, def, base_class) {
 
     if (typeof input === 'string') {
@@ -100,3 +103,4 @@ function Component(input, def, base_class) {
     output["script"] = script;
     return output;
 }
+export default Component;

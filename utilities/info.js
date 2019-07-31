@@ -30,3 +30,4 @@ function info(base_class,settings =false) {
     }
     console.table(settings);
 }
+export default info;
