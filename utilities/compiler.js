@@ -1,13 +1,11 @@
-<?php 
-function compiler($base_class, $scheme = null){
+function compiler(scheme = null){
 
-    $compiler = "";
+    let compiler = "";
     
-        foreach($scheme as $value){
-            if ($value["condition"] === true) {
-                    $compiler .= $value["line"];
-            }
+    scheme.forEach(function(value){
+            if (value["condition"]) {
+                compiler += value["line"];
         }
-    return $compiler;
+    })
+    return compiler;
 }
-?>

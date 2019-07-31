@@ -1,32 +1,32 @@
-<?php
-function info($settings =false) {
-    $compiler = "";
-    $compiler2 = "";
-    $compiler .= "console.log('The default options for this components are: ');\n
-    var settings = {};\n";
+function info(base_class,settings =false) {
+    compiler = "";
+    compiler2 = "";
+    console.log(' ####################');
+    console.log(' #### '+base_class.toUpperCase()+" ####"+"#".repeat((10 - base_class.length)));
+    console.log(' ####################');
+    console.log('The default options for this components are: ');
+    var settings = {};
 
-    if (is_array($settings)) {
+    if (Array.isArray(settings)) {
 
-        foreach ($settings as $key => $value) {
+        settings.forEach (function(value, key){
 
-            if (is_array($value)) {
-                $compiler .= "settings.".$key." = "."{};\n";
+            if (is_array(value)) {
+                settings.key = {};
 
-                foreach($value as $k2 => $v2) {
-                    $compiler .= "settings.".$key."[".$k2."] = "."\"$v2\";\n";
-                }
+                value.forEach(function(k2, v2){
+                    settings.key[k2] = v2;
+                }) 
             }   else  {
 
-                if (empty($value)) {
-                    $compiler .= 'settings.'.$key.' = "/* '.$key.' goes here */";';
+                if (!value) {
+                    compiler += settings.key = "/* "+key+" goes here */";
                     
                 }   else    {
-                    $compiler .= "settings.".$key." = "."\"$value\";\n";
+                    compiler += "settings."+key+" = "+value;
                 }
             } 
-        }
+        }) 
     }
-    $compiler .= "console.table(settings);\n";
-    return $compiler;
+    console.table(settings);
 }
-?>
