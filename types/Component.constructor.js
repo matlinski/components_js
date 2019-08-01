@@ -33,7 +33,6 @@ function Component(input, def, base_class) {
             def[key] = value;
         }
     }
-    console.log(s)
     output["id"] = base_class;
     const id_supply = ['0', '1', '2', '3', '4', '5', '6', '7',
     '8', '9', 'q', 'w', 'e', 'r', 't', 'y', 'i', 'o', 'p',
@@ -80,7 +79,6 @@ function Component(input, def, base_class) {
         } else {
 
             output["script"] = output["script"].replace(/[&]/g, '$(\'#'+output["id"]+'\')');
-            console.log(output["script"]);
         }
     }
     return output;
