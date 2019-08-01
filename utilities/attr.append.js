@@ -1,27 +1,17 @@
-function attr_append(attr, base_attributes = []) {
+function attr_append(attr, base_attributes = {}) {
         let attr_compiler = "";
-        if (Array.isArray(attr)) {
+        if (typeof attr === 'object') {
+            attr = {...base_attributes, ...attr}
             for(const [key, value] of Object.entries(attr)){
-
-                for(const [k, v] of Object.entries(base_attributes)){
-
-                    if (key === k) {
-                        attr_compiler += " "+k+"=\""+value+"\"";
-                        
-                    }   else    {
-                        attr_compiler += " "+k+"=\""+v+"\"";
                         attr_compiler += " "+key+"=\""+value+"\"";
-                    }
                 } 
-                if (!base_attributes) {
-                    attr_compiler += " "+key+"=\""+value+"\"";
-                } 
-            } 
+             
             attr = attr_compiler;
 
         } else {
-            console.log(base_attributes);
+            console.log(attr)
             attr= attr.split(" ");
+            console.log(attr)
 
             for(const [key, value] of Object.entries(attr)){
 

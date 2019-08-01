@@ -1,59 +1,62 @@
-<?php
+import Component from './Component.constructor.js'
+import attr_append from '../utilities/attr.append.js'
+import compiler from '../utilities/compiler.js'
+import html from '../utilities/html.func.js'
 
-function Badge($input = "") {
-$base_class = "badge";
-
-$default = [
-                "content"   =>  "Content placeholder",
-                "tag"       =>  "span",
-                "attr"      =>  "",
-                "template"  =>  "badge-primary",
-                "style"     =>  "",
-                "script"    =>  ""
-            ];
-foreach(Component($input, $default, $base_class) as $key => $value) {
-    $$key = $value;
+function Badge(input = '') {
+	const {
+		content,
+		tag,
+		attr,
+		template,
+		style,
+		script,
+		id
+	} = Component(input, {
+		content: 'Content placeholder',
+		tag: 'span',
+		attr: '',
+		template: 'badge-primary',
+		style: '',
+		script: ''
+    }, 'badge');
+    return compiler([
+		{
+            "condition" : tag === "span",
+            "line"      : html('span',`id='${id}' class='badge 
+                                ${template}' `+attr_append(attr)
+                                )+content
+        },
+        {
+            "condition" : tag === "span" && !script,
+            "line"      : html('script')+script+html('script','/')
+        },
+        {
+           "condition" : tag === "span" && !style,
+            "line"      : html('style')+style+html('style','/')
+        },
+        {
+            "condition" : tag === "span",
+            "line"      : html('span','/')
+        },
+        {
+            "condition" : (tag === "a"),
+            "line"      : html('a',`id='${id}' class='badge 
+                ${template}' `+attr_append(attr,{"href":"#"})
+            )+content
+        },
+        {
+            "condition" : tag === "a" && !script,
+            "line"      : html('script')+script+html('script','/')
+        },
+        {
+                "condition" : tag === "a" && !style,
+                "line"      : html('style')+style+html('style','/')
+        },
+        {
+            "condition" : tag === "a",
+            "line"      : html('a','/')
+        },
+	]);
 }
-           
-$scheme =   [
-                [
-                    "condition" => $tag === "span",
-                    "line"      => html('span',"id='$id' class='$base_class 
-                                        $template' ".attr_append($attr)
-                                        ).$content
-                ],
-                [
-                    "condition" => $tag === "span" && !empty($script),
-                    "line"      => html('script').$script.html('script','/')
-                ],
-                [
-                        "condition" => $tag === "span" && !empty($style),
-                        "line"      => html('style').$style.html('style','/')
-                ],
-                [
-                    "condition" => $tag === "span",
-                    "line"      => html('span','/')
-                ],
-                [
-                    "condition" => ($tag === "a"),
-                    "line"      => html('a',"id='$id' class='$base_class 
-                        $template' ".attr_append($attr,["href"=>"#"])
-                    ).$content
-                ],
-                [
-                    "condition" => $tag === "a" && !empty($script),
-                    "line"      => html('script').$script.html('script','/')
-                ],
-                [
-                        "condition" => $tag === "a" && !empty($style),
-                        "line"      => html('style').$style.html('style','/')
-                ],
-                [
-                    "condition" => $tag === "a",
-                    "line"      => html('a','/')
-                ],
-            ];
-return Compiler($base_class, $scheme);
-}
-
-?>
+export default Badge;

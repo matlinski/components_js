@@ -1,4 +1,8 @@
-<?php
+import Component from './Component.constructor.js'
+import attr_append from '../utilities/attr.append.js'
+import compiler from '../utilities/compiler.js'
+import html from '../utilities/html.func.js'
+
 function f_carousel($active, $interval =5000, $content){
 
     if(is_array($content)){
@@ -140,4 +144,3 @@ $default = [
                        ];
            return Compiler($base_class, $scheme);
 }
-?>

@@ -1,4 +1,8 @@
-<?php
+import Component from './Component.constructor.js'
+import attr_append from '../utilities/attr.append.js'
+import compiler from '../utilities/compiler.js'
+import html from '../utilities/html.func.js'
+
 function Button($input = "") {
 $base_class = "btn";
 
@@ -371,5 +375,3 @@ $default = [
                        
            return Compiler($base_class, $scheme);
 }
-
-?>

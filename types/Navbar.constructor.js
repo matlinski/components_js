@@ -1,4 +1,7 @@
-<?php
+import Component from './Component.constructor.js'
+import attr_append from '../utilities/attr.append.js'
+import compiler from '../utilities/compiler.js'
+import html from '../utilities/html.func.js'
 
 function Navbar($input = "") {
 $base_class = "navbar";
@@ -44,5 +47,3 @@ $default = [
                    
        return Compiler($base_class, $scheme);
 }
-
-?>

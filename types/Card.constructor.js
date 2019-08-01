@@ -1,4 +1,7 @@
-<?php
+import Component from './Component.constructor.js'
+import attr_append from '../utilities/attr.append.js'
+import compiler from '../utilities/compiler.js'
+import html from '../utilities/html.func.js'
 function Card($input = "") {
 $base_class = "card";
 
@@ -55,5 +58,3 @@ $default = [
                        
            return Compiler($base_class, $scheme);
 }
-
-?>

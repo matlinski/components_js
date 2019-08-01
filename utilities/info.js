@@ -1,4 +1,5 @@
 function info(base_class,settings =false) {
+    var infoTable = Object.assign({}, settings);
     console.log(' ####################');
     console.log(' #### '+base_class.toUpperCase()+" ####"+"#".repeat((10 - base_class.length)));
     console.log(' ####################');
@@ -6,13 +7,13 @@ function info(base_class,settings =false) {
 
     if (typeof settings === 'object') {
 
-        for(let [key, value] of Object.entries(settings)){
+        for(const [key, value] of Object.entries(settings)){
             if (value == '') {
-                settings[key] = key+" goes here"; 
+                infoTable[key] = key+" goes here"; 
             }
         } 
     }
     
-    console.table(settings)
+    console.table(infoTable)
 }
 export default info;

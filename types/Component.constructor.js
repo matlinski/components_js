@@ -3,10 +3,11 @@ import rand from '../utilities/rand.func.js'
 
 function Component(input, def, base_class) {
     let output = [];
+    var s ='';
     if (typeof input === 'string') {
         try
         {
-        var s = JSON.parse(yourJsonString);
+        s = JSON.parse(input);
         }
         catch(e)
         {
@@ -15,32 +16,21 @@ function Component(input, def, base_class) {
             }
             info(base_class, def); 
         }
-    } 
-      else if (typeof input === 'object') {
-        
-        output = [];
+    }
+    if (Array.isArray(input)) {
         let i = 0;
-        for(const [key, value] of Object.entries(def)){
-
-            if (isNaN(key)) {
-
-                if (i >= input.length) {
-                   break; 
-                }
-                def[key] = input[i];
-                i++;
-
-            }   else    {
-
-                input.forEach (function(v, k){
-                    def[k] = v;
-                }) 
+        for(const [key, value] of Object.entries(def)){  
+            if(i < input.length){
+            def[key] = input[i];
+                i++
             }
-        } 
-
-    }  else  {      
-        for(const [key, value] of Object.entries(def)){
-            def.key = value;
+        }
+    }   
+    else if (typeof input === 'object') {
+        def = {...def, ...input}
+    }   else  {      
+        for(const [key, value] of Object.entries(s)){
+            def[key] = value;
         }
     }
     output["id"] = base_class;
@@ -62,36 +52,40 @@ function Component(input, def, base_class) {
     if (typeof trigger_id !== 'undefined' && trigger_id.length > 0) {
         output["id"] = trigger_id;
     }
+    console.log(def);
+    if(output["style"] !== undefined){
+        if (Array.isArray(output["style"])) {
+            let style_compiler = "";
+            
+            output["style"].forEach(function(value, key){
+                key = key.replace("/[&]/", "");
+                style_compiler += "#".output["id"]+".{base_class}key{\n"+value+"\n}";
+            }) 
+            output["style"] = style_compiler;
 
-    if (Array.isArray(output["style"])) {
-        let style_compiler = "";
-        
-        output["style"].forEach(function(value, key){
-            key = key.replace("/[&]/", "");
-            style_compiler += "#".output["id"]+".{base_class}key{\n"+value+"\n}";
-        }) 
-        output["style"] = style_compiler;
+        } else {
 
-    } else {
-
-        let style_compiler = "";
-        output["style"] = output["style"].replace("/[&]/", "#"+output["id"]+".{base_class}");
-        output["style"] = style_compiler;
+            let style_compiler = "";
+            output["style"] = output["style"].replace("/[&]/", `#${output["id"]}.${base_class}`);
+            output["style"] = style_compiler;
+        }
     }
-    if (Array.isArray(output["script"])) {
-        let script_compiler = "";
-        
-        output["script"].forEach(function(value, key){
-            key = key.replace("/[&]/", "", );
-            script_compiler += '(\'#'+output["id"]+'\')';
-        }) 
-        output["script"] = script_compiler;
+    if(output["script"] !== undefined){
+        if (Array.isArray(output["script"])) {
+            let script_compiler = "";
+            
+            output["script"].forEach(function(value, key){
+                key = key.replace("/[&]/", "", );
+                script_compiler += '(\'#'+output["id"]+'\')';
+            }) 
+            output["script"] = script_compiler;
 
-    } else {
+        } else {
 
-        let script_compiler = "";
-        output["script"] = output["script"].replace("/[&]/", '(\'#'+output["id"]+'\')');
-        output["script"] = script_compiler;
+            let script_compiler = "";
+            output["script"] = output["script"].replace("/[&]/", '(\'#'+output["id"]+'\')');
+            output["script"] = script_compiler;
+        }
     }
     return output;
 }

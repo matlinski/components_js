@@ -6,7 +6,6 @@ function compiler(scheme = null){
                 compiler += value.line;
         }
     }
-    console.log(compiler);
 
     return compiler;
 }

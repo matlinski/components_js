@@ -1,4 +1,9 @@
-<?php
+import Component from './Component.constructor.js'
+import attr_append from '../utilities/attr.append.js'
+import compiler from '../utilities/compiler.js'
+import html from '../utilities/html.func.js'
+
+
 function f_navs($content, $active, $disabled){
     $content_compiler = '';
     foreach($content as $key => $value) {
@@ -75,5 +80,3 @@ $default = [
                        
            return Compiler($base_class, $scheme);
 }
-
-?>

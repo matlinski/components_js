@@ -1,87 +1,86 @@
-<?php
-function f_breadcrumb($content){
-    if(is_array($content)){
-            $content_compiler = "";
-            $i = 1;
-            foreach($content as $value) {
+import Component from './Component.constructor.js'
+import attr_append from '../utilities/attr.append.js'
+import compiler from '../utilities/compiler.js'
+import html from '../utilities/html.func.js'
+function f_breadcrumb(content){
+    if(Array.isArray(content)){
+            let content_compiler = "";
+            let i = 1;
+            content.forEach(function(value){
             
-                if ($i === (count($content)) ) {
-                    $content_compiler .= 
-                    html('li', ['class'=>'breadcrumb-item active','aria-current'=>'page']).
-                    $value.
+                if (i === content.length ) {
+                    content_compiler += 
+                    html('li', {'class': 'breadcrumb-item active','aria-current': 'page'})+
+                        value+
                     html('li','/');    
                 
                 }	else	{
-                    $content_compiler .= 
-                    html('li', ['class'=>'breadcrumb-item']).
-                    $value.
+                    content_compiler += 
+                    html('li', {'class': 'breadcrumb-item'})+
+                    value+
                     html('li','/');
                 } 
-            $i++;
-            }
-            return $content_compiler;
+            i++;
+            }) 
+            return content_compiler;
 
     } else {
         return 'Please set the content as an array';
     }
 };
 
-
-function Breadcrumb($input = "") {
-$base_class = "breadcrumb";
-
-$default = [
-                "content"   => 
-                    [
-                    html('a',['href'=>'home.html']).'home'.html('a','/'),
-                    html('a',['href'=>'library.html']).'library'.html('a','/'),
+function Breadcrumb(input = '') {
+	let {
+		content,
+		attr,
+		template,
+		separator,
+		style,
+		script,
+		id
+	} = Component(input, {
+		content: [
+                    html('a',{'href':'home.html'})+'home'+html('a','/'),
+                    html('a',{'href':'library.html'})+'library'+html('a','/'),
                     'data'
-                    ],
-                "separator" =>  ">",
-                "attr"      =>  "",
-                "template"  =>  "justify-content-left",
-                "style"     =>  "",
-                "script"    =>  ""
-            ];
-            
-            foreach(Component($input, $default, $base_class) as $key => $value) {
-                $$key = $value;
-           }
-           
-           
-           if ($separator) {
-                     $style .= '
-                         .breadcrumb-item + .breadcrumb-item::before{
-                             content: "'.$separator.'";
-                         }
-                     ';
-                 }   
-           $scheme =   [
-                          [
-                               "condition" => true,
-                               "line"      => html('ul',"id='$id' class='$base_class 
-                                                $template' ".attr_append($attr)
-                                                )
-                          ],
-                          [
-                               "condition" => true,
-                               "line"      => f_breadcrumb($content)
-                          ],
-                          [
-                               "condition" => !empty($script),
-                               "line"      => html('script').$script.html('script','/')
-                          ],
-                          [
-                               "condition" => !empty($style),
-                               "line"      => html('style').$style.html('style','/')
-                          ],
-                          [
-                               "condition" => true,
-                               "line"      => html('ul','/')
-                          ],
-                       ];
-                       
-           return Compiler($base_class, $scheme);
+                ],
+		attr: '',
+		template: 'justify-content-left',
+		separator: '>',
+		style: '',
+		script: ''
+    }, 'breadcrumb');
+    if (separator) {
+        style += `
+            .breadcrumb-item + .breadcrumb-item::before
+            {
+                content: "${separator}";
+            }
+            `
+    } 
+	return compiler([
+		{
+            "condition" :  true,
+            "line"      :  html('ul',`id='${id}' class='breadcrumb 
+                             ${template}' `+attr_append(attr)
+                             )
+       },
+       {
+            "condition" :  true,
+            "line"      :  f_breadcrumb(content)
+       },
+       {
+         'condition': script && script.length > 0,
+         'line': html('script') + script + html('script', '/')
+       },
+       {
+             'condition': style && style.length > 0,
+             'line': html('style') + style + html('style', '/')
+       },
+       {
+            "condition" :  true,
+            "line"      :  html('ul','/')
+       },
+    ]);
 }
-
-?>
+export default Breadcrumb;

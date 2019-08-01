@@ -13,7 +13,10 @@
 <body id="test222">
         <script type="module">
             import Alert from './types/Alert.constructor.js';
-            document.getElementById('test222').innerHTML = (Alert('{"content": "test"}'))
+            import Badge from './types/Badge.constructor.js';
+            import Breadcrumb from './types/Breadcrumb.constructor.js';
+            // document.getElementById('test222').innerHTML = (Badge('asdsadasdasd'))
+            document.getElementById('test222').innerHTML += (Alert({"template": "bg-dark", "attr": {test: 'test2'}}))
         </script>
         
     <script src="https://code.jquery.com/jquery-3.3.1.js" ></script>

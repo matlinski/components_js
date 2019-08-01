@@ -1,4 +1,8 @@
-<?php
+import Component from './Component.constructor.js'
+import attr_append from '../utilities/attr.append.js'
+import compiler from '../utilities/compiler.js'
+import html from '../utilities/html.func.js'
+
 function f_pagination($links, $interface, $active){
     $links_compiler = '';
        if(is_array($links)){
@@ -94,5 +98,3 @@ $default = [
                        
            return Compiler($base_class, $scheme);
 }
-
-?>
