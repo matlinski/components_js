@@ -1,6 +1,5 @@
 import info from '../utilities/info.js'
 import rand from '../utilities/rand.func.js'
-
 function Component(input, def, base_class) {
     let output = [];
     var s ='';
@@ -52,7 +51,6 @@ function Component(input, def, base_class) {
     if (typeof trigger_id !== 'undefined' && trigger_id.length > 0) {
         output["id"] = trigger_id;
     }
-    console.log(def);
     if(output["style"] !== undefined){
         if (typeof output["style"] === 'object') {
             let style_compiler = "";
@@ -66,7 +64,6 @@ function Component(input, def, base_class) {
             let style_compiler = "";
             style_compiler = output["style"].replace(/[&]/g, `#${output["id"]}.${base_class}`);
             output["style"] = style_compiler;
-            console.log(style_compiler)
         }
     }
     if(output["script"] !== undefined){
@@ -77,13 +74,11 @@ function Component(input, def, base_class) {
                 script_compiler += key.replace(/[&]/g, '$(\'#'+output["id"]+'\')'+value);
             } 
             output["script"] = script_compiler;
-            console.log(script_compiler)
 
         } else {
 
-            let script_compiler = "";
-            output["script"] = output["script"].replace(/[&]/g, '(\'#'+output["id"]+'\')');
-            output["script"] = script_compiler;
+            output["script"] = output["script"].replace(/[&]/g, '$(\'#'+output["id"]+'\')');
+            console.log(output["script"]);
         }
     }
     return output;

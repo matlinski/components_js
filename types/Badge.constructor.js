@@ -3,7 +3,7 @@ import attr_append from '../utilities/attr.append.js'
 import compiler from '../utilities/compiler.js'
 import html from '../utilities/html.func.js'
 
-function Badge(input = '') {
+function Badge(input = '', parent = 'body') {
 	const {
 		content,
 		tag,
@@ -20,7 +20,7 @@ function Badge(input = '') {
 		style: '',
 		script: ''
     }, 'badge');
-    return compiler([
+    document.querySelector(parent).innerHTML += compiler([
 		{
             "condition" : tag === "span",
             "line"      : html('span',`id='${id}' class='badge 
@@ -57,6 +57,7 @@ function Badge(input = '') {
             "condition" : tag === "a",
             "line"      : html('a','/')
         },
-	]);
+    ]);
+    eval(script);
 }
 export default Badge;

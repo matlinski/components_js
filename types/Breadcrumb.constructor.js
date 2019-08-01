@@ -29,7 +29,7 @@ function f_breadcrumb(content){
     }
 };
 
-function Breadcrumb(input = '') {
+function Breadcrumb(input = '', parent = 'body') {
 	let {
 		content,
 		attr,
@@ -58,7 +58,7 @@ function Breadcrumb(input = '') {
             }
             `
     } 
-	return compiler([
+	document.querySelector(parent).innerHTML += compiler([
 		{
             "condition" :  true,
             "line"      :  html('ul',`id='${id}' class='breadcrumb 
@@ -82,5 +82,6 @@ function Breadcrumb(input = '') {
             "line"      :  html('ul','/')
        },
     ]);
+    eval(script);
 }
 export default Breadcrumb;

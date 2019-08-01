@@ -2,7 +2,7 @@ import Component from './Component.constructor.js'
 import attr_append from '../utilities/attr.append.js'
 import compiler from '../utilities/compiler.js'
 import html from '../utilities/html.func.js'
-function Alert(input = '') {
+function Alert(input = '', parent = 'body') {
 	const {
 		content,
 		tag,
@@ -21,7 +21,7 @@ function Alert(input = '') {
 		style: '',
 		script: ''
 	}, 'alert');
-	return compiler([
+	document.querySelector(parent).innerHTML += compiler([
 		{
 			condition: true,
 			line: html(tag, `id="${id}" class="alert ${template}" `+attr_append(attr, { role: 'alert' }))
@@ -42,10 +42,6 @@ function Alert(input = '') {
 		 	html('button', '/')
 		 },
 		{
-			condition: script && script.length > 0,
-			line: html('script') + script + html('script', '/')
-		},
-		{
 			condition: style && style.length > 0,
 			line: html('style') + style + html('style', '/')
 		},
@@ -54,5 +50,6 @@ function Alert(input = '') {
 			line: html(tag, '/')
 		}
 	]);
+	eval(script);
 }
 export default Alert;
