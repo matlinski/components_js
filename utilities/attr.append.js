@@ -18,10 +18,10 @@ function attr_append(attr, base_attributes = {}) {
 
                 for(const [k, v] of Object.entries(base_attributes)){                    
 
-                    if (value.match("/k([^']*?)=([^']*?)\"([^']*?)\"/")) {
+                    if (value.match(/k([^']*?)=([^']*?)\"([^']*?)\"/)) {
 
-                        let attr_string = value.match("/k([^']*?)=([^']*?)\"([^']*?)\"/");
-                        value = value.replace("/k([^']*?)=([^']*?)\"([^']*?)\"/", "");
+                        let attr_string = value.match(/k([^']*?)=([^']*?)\"([^']*?)\"/);
+                        value = value.replace(/k([^']*?)=([^']*?)\"([^']*?)\"/, "");
                         attr_string= attr_string.join("");
                         attr_string= attr_string.split(k+"=");
                         attr_string= attr_string.join("");
