@@ -10,22 +10,23 @@ function attr_append(attr, base_attributes = {}) {
 
         } else {
             attr= attr.split(" ");
-
+            
             for(const [key, value] of Object.entries(attr)){
 
 
                 for(const [k, v] of Object.entries(base_attributes)){                    
 
-                    if (value.match(/k([^']*?)=([^']*?)\"([^']*?)\"/)) {
+                    if (value.match(/k([^']*?)=([^']*?)\"([^']*?)\"/g)) {
 
-                        let attr_string = value.match(/k([^']*?)=([^']*?)\"([^']*?)\"/);
-                        value = value.replace(/k([^']*?)=([^']*?)\"([^']*?)\"/, "");
+                        let attr_string = value.match(/k([^']*?)=([^']*?)\"([^']*?)\"/g);
+                        value = value.replace(/k([^']*?)=([^']*?)\"([^']*?)\"/g, "");
                         attr_string= attr_string.join("");
                         attr_string= attr_string.split(k+"=");
                         attr_string= attr_string.join("");
                         attr_string= attr_string.split("\"");
                         attr_string= attr_string.join("");
                         attr_compiler += " "+k+"=\""+attr_string+"\"";
+                        
 
                     } else {
                         let attr_string = k+'="'+v+'" ';
@@ -35,6 +36,7 @@ function attr_append(attr, base_attributes = {}) {
                 } 
             } 
         }
+        
         return attr_compiler;
     }
     export default attr_append;

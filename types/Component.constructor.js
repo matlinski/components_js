@@ -7,6 +7,7 @@ function Component(input, def, base_class) {
         try
         {
         s = JSON.parse(input);
+        
         }
         catch(e)
         {
@@ -32,6 +33,7 @@ function Component(input, def, base_class) {
             def[key] = value;
         }
     }
+    console.log(s)
     output["id"] = base_class;
     const id_supply = ['0', '1', '2', '3', '4', '5', '6', '7',
     '8', '9', 'q', 'w', 'e', 'r', 't', 'y', 'i', 'o', 'p',
