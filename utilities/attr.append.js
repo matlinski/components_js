@@ -9,9 +9,7 @@ function attr_append(attr, base_attributes = {}) {
             attr = attr_compiler;
 
         } else {
-            console.log(attr)
             attr= attr.split(" ");
-            console.log(attr)
 
             for(const [key, value] of Object.entries(attr)){
 

@@ -54,36 +54,35 @@ function Component(input, def, base_class) {
     }
     console.log(def);
     if(output["style"] !== undefined){
-        if (Array.isArray(output["style"])) {
+        if (typeof output["style"] === 'object') {
             let style_compiler = "";
-            
-            output["style"].forEach(function(value, key){
-                key = key.replace("/[&]/", "");
-                style_compiler += "#".output["id"]+".{base_class}key{\n"+value+"\n}";
-            }) 
+            for(const [key, value] of Object.entries(output["style"])){
+                style_compiler += "#"+output["id"]+`.${base_class}${key.replace(/[&]/g, "")}{${value}}`;
+            }
             output["style"] = style_compiler;
 
         } else {
 
             let style_compiler = "";
-            output["style"] = output["style"].replace("/[&]/", `#${output["id"]}.${base_class}`);
+            style_compiler = output["style"].replace(/[&]/g, `#${output["id"]}.${base_class}`);
             output["style"] = style_compiler;
+            console.log(style_compiler)
         }
     }
     if(output["script"] !== undefined){
-        if (Array.isArray(output["script"])) {
+        if (typeof output["script"] === 'object') {
             let script_compiler = "";
             
-            output["script"].forEach(function(value, key){
-                key = key.replace("/[&]/", "", );
-                script_compiler += '(\'#'+output["id"]+'\')';
-            }) 
+            for(const [key, value] of Object.entries(output["script"])){
+                script_compiler += key.replace(/[&]/g, '$(\'#'+output["id"]+'\')'+value);
+            } 
             output["script"] = script_compiler;
+            console.log(script_compiler)
 
         } else {
 
             let script_compiler = "";
-            output["script"] = output["script"].replace("/[&]/", '(\'#'+output["id"]+'\')');
+            output["script"] = output["script"].replace(/[&]/g, '(\'#'+output["id"]+'\')');
             output["script"] = script_compiler;
         }
     }
