@@ -72,13 +72,13 @@ function Component(input, def, base_class) {
             let script_compiler = "";
             
             for(const [key, value] of Object.entries(output["script"])){
-                script_compiler += key.replace(/[&]/g, '$(\'#'+output["id"]+'\')'+value);
+                script_compiler += key.replace(/[$]/g, '$(\'#'+output["id"]+'\')'+value);
             } 
             output["script"] = script_compiler;
 
         } else {
 
-            output["script"] = output["script"].replace(/[&]/g, '$(\'#'+output["id"]+'\')');
+            output["script"] = output["script"].replace(/[$]/g, '$(\'#'+output["id"]+'\')');
         }
     }
     output["parent"] = 'body';
