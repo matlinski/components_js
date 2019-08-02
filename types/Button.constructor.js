@@ -1,5 +1,6 @@
 import Component from './Component.constructor.js'
 import attr_append from '../utilities/attr.append.js'
+import secondary_id from '../utilities/secondary_id.js'
 import compiler from '../utilities/compiler.js'
 import html from '../utilities/html.func.js'
 function Button(input = '') {
@@ -13,7 +14,6 @@ function Button(input = '') {
 		popover,
 		collapse,
 		style,
-		script,
 		id,
 		parent
 	} = Component(input, {
@@ -25,22 +25,21 @@ function Button(input = '') {
 		dropdown: false,
 		popover: false,
 		collapse: false,
-		style: '',
-		script: ''
+		style: ''
 	}, 'btn');
-        if (popover && !tooltip && !dropdown && !collapse) {
-             $script += 
-             `$(function () {
-                 $(\'[data-toggle="popover"]\').popover()
-             })`;
-         }
+        // if (popover && !tooltip && !dropdown && !collapse) {
+        //      script += 
+        //      `$(function () {
+        //          $(\'[data-toggle="popover"]\').popover()
+        //      })`;
+        //  }
   
-        if (tooltip && !popover && !dropdown && !collapse) {
-             $script += 
-             `$(function () {
-                 $(\'[data-toggle="tooltip"]\').tooltip()
-             })`;
-         }
+        // if (tooltip && !popover && !dropdown && !collapse) {
+        //      $script += 
+        //      `$(function () {
+        //          $(\'[data-toggle="tooltip"]\').tooltip()
+        //      })`;
+        //  }
          if (dropdown && !popover && !tooltip && !collapse) {
              $style += 
              '#'+$id+'.'+$base_class+`>.dropdown>.dropdown-menu>*{
@@ -57,7 +56,7 @@ function Button(input = '') {
              }`;
          }
              let drop_length;
-             let secondary_id = 'test';
+             let s_id = secondary_id();
          if(!Array.isArray(dropdown)){
              drop_length = 0;
          } 
@@ -100,22 +99,22 @@ function Button(input = '') {
          if(tag === "button" && collapse && !tooltip && !dropdown && !popover){
             base_attr = {
                "data-toggle"   :  "collapse",
-               "data-target"   :  '#'.$secondary_id,
+               "data-target"   :  '#'+s_id,
                "aria-expanded" :  "false",
-               "aria-controls" :  '#'.$secondary_id};  
+               "aria-controls" :  '#'+s_id};  
          }
          if(tag === "button" && !tooltip && !dropdown && !popover && !collapse){
             base_attr = {
                "type":"submit"};  
          }
-         if(tag = 'a'){
-               base_attr.href = '#'
-               base_attr.role = 'button'
-               base_attr.type = "submit"
+         if(tag === 'a'){
+               base_attr['href'] = '#'
+               base_attr['role'] = 'button'
+               base_attr['type'] = "submit"
           }
-          if(tag = 'input'){
-               base_attr.type = "submit"
-               base_attr.value = content
+          if(tag === 'input'){
+               base_attr['type'] = "submit"
+               base_attr['value'] = content
           } 
           return compiler([
                          {
@@ -145,7 +144,7 @@ function Button(input = '') {
                                              drop_compilator += value;
                                              i++;
                                             
-                                         }   else if ($i <= (dropdown.length-1) && drop_length.match(/[<>]+/))  {
+                                         }   else if (i <= (dropdown.length-1) && drop_length.match(/[<>]+/))  {
                                                     
                                              drop_compilator += value;
                                              i++;
@@ -163,7 +162,7 @@ function Button(input = '') {
                          },
                           {
                                "condition" : collapse && !dropdown && !tooltip && !popover,
-                               "line"      : html('div',{'class':'collapse navbar-collapse', 'id':$secondary_id}, collapse)
+                               "line"      : html('div',{'class':'collapse navbar-collapse', 'id':s_id}, collapse)
                          }
                        ]);
 }
