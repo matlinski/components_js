@@ -21,7 +21,7 @@ function Alert(input = '', parent = 'body') {
 		style: '',
 		script: ''
 	}, 'alert');
-	document.querySelector(parent).innerHTML += compiler([
+	return 'document.querySelector("'+parent+'").innerHTML += `'+compiler([
 		{
 			condition: true,
 			line: html(tag, `id="${id}" class="alert ${template}" `+attr_append(attr, { role: 'alert' }))
@@ -49,7 +49,6 @@ function Alert(input = '', parent = 'body') {
 			condition: true,
 			line: html(tag, '/')
 		}
-	]);
-	eval(script);
+	])+'`;'+((script && script.length > 0)?script :'');
 }
 export default Alert;
