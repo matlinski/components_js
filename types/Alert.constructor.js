@@ -30,11 +30,11 @@ function Alert(input = '') {
 							`id="${id}" class="alert ${template}"`+
 							attr_append(attr, { role: 'alert' }),
 							content+
-							html	(
+							((style && style.length > 0)?(html	(
 										'style',
 										'',
 										style
-									)+
+									)) :'')+
 									(
 										(dismisable)
 										?(

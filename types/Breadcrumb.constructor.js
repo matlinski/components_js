@@ -10,15 +10,11 @@ function f_breadcrumb(content){
             
                 if (i === content.length ) {
                     content_compiler += 
-                    html('li', {'class': 'breadcrumb-item active','aria-current': 'page'})+
-                        value+
-                    html('li','/');    
+                    html('li', {'class': 'breadcrumb-item active','aria-current': 'page'}, value)
                 
                 }	else	{
                     content_compiler += 
-                    html('li', {'class': 'breadcrumb-item'})+
-                    value+
-                    html('li','/');
+                    html('li', {'class': 'breadcrumb-item'}, value)
                 } 
             i++;
             }) 
@@ -40,8 +36,8 @@ function Breadcrumb(input = '', parent = 'body') {
 		id
 	} = Component(input, {
 		content: [
-                    html('a',{'href':'home.html'})+'home'+html('a','/'),
-                    html('a',{'href':'library.html'})+'library'+html('a','/'),
+                    html('a',{'href':'home.html'}, 'home'),
+                    html('a',{'href':'library.html'}, 'library'),
                     'data'
                 ],
 		attr: '',
@@ -58,30 +54,14 @@ function Breadcrumb(input = '', parent = 'body') {
             }
             `
     } 
-	document.querySelector(parent).innerHTML += compiler([
+	return 'document.querySelector("'+parent+'").innerHTML += `'+compiler([
 		{
             "condition" :  true,
             "line"      :  html('ul',`id='${id}' class='breadcrumb 
-                             ${template}' `+attr_append(attr)
+                             ${template}' `+attr_append(attr),
+                             f_breadcrumb(content)+((style && style.length > 0)?html('style','', style):'')
                              )
-       },
-       {
-            "condition" :  true,
-            "line"      :  f_breadcrumb(content)
-       },
-       {
-         'condition': script && script.length > 0,
-         'line': html('script') + script + html('script', '/')
-       },
-       {
-             'condition': style && style.length > 0,
-             'line': html('style') + style + html('style', '/')
-       },
-       {
-            "condition" :  true,
-            "line"      :  html('ul','/')
-       },
-    ]);
-    eval(script);
+       }
+    ])+'`;'+((script && script.length > 0)?script+';' :'');
 }
 export default Breadcrumb;

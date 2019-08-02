@@ -20,44 +20,21 @@ function Badge(input = '', parent = 'body') {
 		style: '',
 		script: ''
     }, 'badge');
-    document.querySelector(parent).innerHTML += compiler([
+    let base_attr;
+    if(tag === 'a'){
+        base_attr = {"href":"#"};
+    } else {
+        base_attr = {};
+    }
+    return 'document.querySelector("'+parent+'").innerHTML += `'+compiler([
 		{
-            "condition" : tag === "span",
-            "line"      : html('span',`id='${id}' class='badge 
-                                ${template}' `+attr_append(attr)
-                                )+content
-        },
-        {
-            "condition" : tag === "span" && !script,
-            "line"      : html('script')+script+html('script','/')
-        },
-        {
-           "condition" : tag === "span" && !style,
-            "line"      : html('style')+style+html('style','/')
-        },
-        {
-            "condition" : tag === "span",
-            "line"      : html('span','/')
-        },
-        {
-            "condition" : (tag === "a"),
-            "line"      : html('a',`id='${id}' class='badge 
-                ${template}' `+attr_append(attr,{"href":"#"})
-            )+content
-        },
-        {
-            "condition" : tag === "a" && !script,
-            "line"      : html('script')+script+html('script','/')
-        },
-        {
-                "condition" : tag === "a" && !style,
-                "line"      : html('style')+style+html('style','/')
-        },
-        {
-            "condition" : tag === "a",
-            "line"      : html('a','/')
-        },
-    ]);
-    eval(script);
+            "condition" : true,
+            "line"      : html(tag,`id='${id}' class='badge ${template}' `+attr_append(attr, base_attr), content + ((style && style.length > 0)?(html	(
+                'style',
+                '',
+                style
+            )) :''))
+        }
+    ])+'`;'+((script && script.length > 0)?script+';' :'');
 }
 export default Badge;
