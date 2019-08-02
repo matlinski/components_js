@@ -81,6 +81,7 @@ function Component(input, def, base_class) {
             output["script"] = output["script"].replace(/[&]/g, '$(\'#'+output["id"]+'\')');
         }
     }
+    output["parent"] = 'body';
     return output;
 }
 export default Component;

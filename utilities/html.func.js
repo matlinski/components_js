@@ -1,5 +1,6 @@
-function html(tag="div", attr=""){
+function html(tag="div", attr="", content=""){
     let compiler = "";
+    const singleGroup = ['area', 'base', 'br', 'col', 'command', 'embed', 'hr', 'img', 'input', 'keygen', 'link', 'meta', 'param', 'source', 'track', 'wbr'];
     compiler += '<'+tag;
     if(tag){
         if(typeof attr === 'object'){
@@ -11,11 +12,11 @@ function html(tag="div", attr=""){
                 compiler += ' '+attr;
         }
         compiler += '>';
-        if(attr === "/") {
-            compiler = '</'+tag+'>';
-        }
-        if(tag === "/") {
-            compiler = '</div>';
+        if(!singleGroup.some(function(i){
+            return i === tag;
+        })){
+            compiler += content;
+            compiler += '</'+tag+'>';
         }
         return compiler;
     }
