@@ -10,15 +10,13 @@ function Badge(input = '', parent = 'body') {
 		attr,
 		template,
 		style,
-		script,
 		id
 	} = Component(input, {
 		content: 'Content placeholder',
 		tag: 'span',
 		attr: '',
 		template: 'badge-primary',
-		style: '',
-		script: ''
+		style: ''
     }, 'badge');
     let base_attr;
     if(tag === 'a'){
@@ -26,7 +24,7 @@ function Badge(input = '', parent = 'body') {
     } else {
         base_attr = {};
     }
-    return 'document.querySelector("'+parent+'").innerHTML += `'+compiler([
+    return compiler([
 		{
             "condition" : true,
             "line"      : html(tag,`id='${id}' class='badge ${template}' `+attr_append(attr, base_attr), content + ((style && style.length > 0)?(html	(
@@ -35,6 +33,6 @@ function Badge(input = '', parent = 'body') {
                 style
             )) :''))
         }
-    ])+'`;'+((script && script.length > 0)?script+';' :'');
+    ])
 }
 export default Badge;

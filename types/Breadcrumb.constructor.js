@@ -25,14 +25,13 @@ function f_breadcrumb(content){
     }
 };
 
-function Breadcrumb(input = '', parent = 'body') {
+function Breadcrumb(input = '') {
 	let {
 		content,
 		attr,
 		template,
 		separator,
 		style,
-		script,
 		id
 	} = Component(input, {
 		content: [
@@ -43,8 +42,7 @@ function Breadcrumb(input = '', parent = 'body') {
 		attr: '',
 		template: 'justify-content-left',
 		separator: '>',
-		style: '',
-		script: ''
+		style: ''
     }, 'breadcrumb');
     if (separator) {
         style += `
@@ -54,7 +52,7 @@ function Breadcrumb(input = '', parent = 'body') {
             }
             `
     } 
-	return 'document.querySelector("'+parent+'").innerHTML += `'+compiler([
+	return compiler([
 		{
             "condition" :  true,
             "line"      :  html('ul',`id='${id}' class='breadcrumb 
@@ -62,6 +60,6 @@ function Breadcrumb(input = '', parent = 'body') {
                              f_breadcrumb(content)+((style && style.length > 0)?html('style','', style):'')
                              )
        }
-    ])+'`;'+((script && script.length > 0)?script+';' :'');
+    ])
 }
 export default Breadcrumb;

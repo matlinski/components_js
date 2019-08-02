@@ -59,8 +59,7 @@ function Button(input = '') {
          $secondary_id = secondary_id();
          if(!is_array($dropdown)){
              $drop_length = 0;
-         }
-            
+         }  
             $scheme =   [
 
                            [

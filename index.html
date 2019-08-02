@@ -19,9 +19,16 @@
         import Alert from './types/Alert.constructor.js';
         import Badge from './types/Badge.constructor.js';
         import Breadcrumb from './types/Breadcrumb.constructor.js';
-        eval(Alert())
-        eval(Badge())
-        eval(Breadcrumb())
+        import Card from './types/Card.constructor.js';
+        const Write = function(s){
+            var scripts = document.getElementsByTagName('script');
+            var lastScript = scripts[scripts.length-1];
+            lastScript.insertAdjacentHTML("beforebegin", s);
+        }
+        Write(Alert())
+        Write(Badge())
+        Write(Breadcrumb())
+        Write(Card())
     </script>
 </body>
 </html>

@@ -2,6 +2,7 @@ import Component from './Component.constructor.js'
 import attr_append from '../utilities/attr.append.js'
 import compiler from '../utilities/compiler.js'
 import html from '../utilities/html.func.js'
+
 function Alert(input = '') {
 	const {
 		content,
@@ -10,7 +11,6 @@ function Alert(input = '') {
 		template,
 		dismisable,
 		style,
-		script,
 		id,
 		parent
 	} = Component(input, {
@@ -19,10 +19,9 @@ function Alert(input = '') {
 		attr: '',
 		template: 'alert-warning fade show',
 		dismisable: true,
-		style: '',
-		script: ''
+		style: ''
 	}, 'alert');
-	return 'document.querySelector("'+parent+'").innerHTML += `'+compiler([
+	return compiler([
 		{
 			condition: true,
 			line: html	(
@@ -57,7 +56,7 @@ function Alert(input = '') {
 									)
 						)
 		}
-	])+'`;'+((script && script.length > 0)?script+';' :'');
+	]);
 }
 export default Alert;
 
