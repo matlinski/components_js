@@ -23,6 +23,9 @@ const component = {
                 return Write(Card(input))
             },
     Button: function(input){
+                $('[data-toggle="popover"]').popover()
+                $('[data-toggle="tooltip"]').tooltip()
+                $('.dropdown-toggle').dropdown()
                 return Write(Button(input))
             }
 }

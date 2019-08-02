@@ -4,7 +4,7 @@ import secondary_id from '../utilities/secondary_id.js'
 import compiler from '../utilities/compiler.js'
 import html from '../utilities/html.func.js'
 function Button(input = '') {
-	const {
+	let {
 		content,
 		tag,
 		attr,
@@ -27,22 +27,9 @@ function Button(input = '') {
 		collapse: false,
 		style: ''
 	}, 'btn');
-        // if (popover && !tooltip && !dropdown && !collapse) {
-        //      script += 
-        //      `$(function () {
-        //          $(\'[data-toggle="popover"]\').popover()
-        //      })`;
-        //  }
-  
-        // if (tooltip && !popover && !dropdown && !collapse) {
-        //      $script += 
-        //      `$(function () {
-        //          $(\'[data-toggle="tooltip"]\').tooltip()
-        //      })`;
-        //  }
          if (dropdown && !popover && !tooltip && !collapse) {
-             $style += 
-             '#'+$id+'.'+$base_class+`>.dropdown>.dropdown-menu>*{
+             style += 
+             `.dropdown>.dropdown-menu>*{
                  display: block;
                  width: 100%;
                  padding: .25rem 1.5rem;
@@ -116,14 +103,42 @@ function Button(input = '') {
                base_attr['type'] = "submit"
                base_attr['value'] = content
           } 
+          console.log(base_attr)
           return compiler([
                          {
-                              "condition" : dropdown,
-                              "line"      : html('div', {'class':'dropdown'}, html(tag,`id='${id}' class='btn ${template}' `+attr_append(attr, base_attr), content + ((style && style.length > 0)?(html	(
+                              "condition" : dropdown && !collapse && !tooltip && !popover,
+                              "line"      : html('div', {'class':'dropdown'},
+                              html(tag,`id='${id}' class='btn ${template}' `+
+                              attr_append(attr, base_attr), content + ((style && style.length > 0)?(html	(
                               'style',
                               '',
                               style
-                              )) :'')))
+                              )) :''))+((dropdown && !Array.isArray(dropdown))
+                              ?html('div',{'class':'dropdown-menu'}, html('a', {href: '#'}, dropdown)) 
+                              :(function(){
+                                let drop_compilator = "";
+                                  if(Array.isArray(dropdown)){
+                                    let i = 0;
+                                    dropdown.forEach (function(value){
+                                        if (i < (dropdown.length-1) && !value.match(/[<>]+/)) {
+                                             drop_compilator += html('a', {href: '#'}, value);
+                                             i++;
+                                         }   else if (i <= (dropdown.length-1) && value.match(/[<>]+/))  {
+                                                    
+                                             drop_compilator += value;
+                                             i++;
+                                                    
+                                         }
+                                    })
+                                    drop_compilator = html('div',{'class':'dropdown-menu'}, drop_compilator);
+                                  } else {
+                                      drop_compilator = dropdown;
+                                  }
+                                
+                                return drop_compilator
+                           })()
+                            )
+                        )
                          },
                          {
                               "condition" : !dropdown,
@@ -132,33 +147,6 @@ function Button(input = '') {
                               '',
                               style
                               )) :''))
-                         },
-                          {
-                               "condition" : dropdown && Array.isArray(dropdown) && !collapse && !tooltip && !popover,
-                               "line"      : function(){
-                                    let drop_compilator = "";
-                                    let i = 0;
-                                    dropdown.forEach (function(value){
-                                        if (i < (dropdown.length-1) && !drop_length.match(/[<>]+/)) {
-                                            
-                                             drop_compilator += value;
-                                             i++;
-                                            
-                                         }   else if (i <= (dropdown.length-1) && drop_length.match(/[<>]+/))  {
-                                                    
-                                             drop_compilator += value;
-                                             i++;
-                                                    
-                                         }   else    {
-                                             break;
-                                         }
-                                    }) 
-                                    return html('div',{'class':'dropdown-menu'}, drop_compilator)
-                               }
-                         },
-                         {
-                               "condition" : dropdown && !Array.isArray(dropdown) && !collapse && !tooltip && !popover,
-                               "line"      : html('div',{'class':'dropdown-menu'}, dropdown)
                          },
                           {
                                "condition" : collapse && !dropdown && !tooltip && !popover,
