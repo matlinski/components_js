@@ -76,21 +76,21 @@ function Button(input = '') {
                     "data-placement"    :  popover[1],
                     "data-content"      :  popover[0]};
          }
-         if(tag === "button" && popover && !Array.isArray(popover) && !tooltip && !dropdown && !collapse){
+         if(popover && !Array.isArray(popover) && !tooltip && !dropdown && !collapse){
             base_attr = {
                "data-container"    :  "body",
                "data-toggle"       :  "popover",
                "data-placement"    :  "top",
                "data-content"      :  popover};  
          }
-         if(tag === "button" && collapse && !tooltip && !dropdown && !popover){
+         if(collapse && !tooltip && !dropdown && !popover){
             base_attr = {
                "data-toggle"   :  "collapse",
                "data-target"   :  '#'+s_id,
                "aria-expanded" :  "false",
                "aria-controls" :  '#'+s_id};  
          }
-         if(tag === "button" && !tooltip && !dropdown && !popover && !collapse){
+         if(!tooltip && !dropdown && !popover && !collapse){
             base_attr = {
                "type":"submit"};  
          }
@@ -114,20 +114,15 @@ function Button(input = '') {
                               '',
                               style
                               )) :''))+((dropdown && !Array.isArray(dropdown))
-                              ?html('div',{'class':'dropdown-menu'}, html('a', {href: '#'}, dropdown)) 
+                              ?html('div',{'class':'dropdown-menu'}, dropdown) 
                               :(function(){
                                 let drop_compilator = "";
                                   if(Array.isArray(dropdown)){
-                                    let i = 0;
                                     dropdown.forEach (function(value){
-                                        if (i < (dropdown.length-1) && !value.match(/[<>]+/)) {
-                                             drop_compilator += html('a', {href: '#'}, value);
-                                             i++;
-                                         }   else if (i <= (dropdown.length-1) && value.match(/[<>]+/))  {
-                                                    
+                                        if (!value.match(/[<>]+/)) {
                                              drop_compilator += value;
-                                             i++;
-                                                    
+                                         }   else if (value.match(/[<>]+/))  {  
+                                             drop_compilator += value;
                                          }
                                     })
                                     drop_compilator = html('div',{'class':'dropdown-menu'}, drop_compilator);
