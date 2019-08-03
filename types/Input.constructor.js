@@ -1,7 +1,7 @@
 import Component from './Component.constructor.js'
 import attr_append from '../utilities/attr.append.js'
 import compiler from '../utilities/compiler.js'
-import html from '../utilities/html.func.js'
+import HTML from '../utilities/HTML.func.js'
 
 function Input(input = '') {
 	let {
@@ -20,7 +20,7 @@ function Input(input = '') {
 		attr: '',
 		template: '',
 		label: "Label placeholder",
-		sticker: html('span','','@'),
+		sticker: HTML('span','','@'),
 		global: 'col-4',
 		style: ''
      }, 'form-group');
@@ -62,31 +62,31 @@ function Input(input = '') {
            return compiler([
                           {
                                "condition" : true,
-                               "line"      : html(
+                               "line"      : HTML(
                                                   'div',
                                                   `id='${id}' style='width:auto' class='form-group ${global} form-control'`,
                                                   ((Array.isArray(label))
-                                                       ?html('label', {'for':id, 'class':label[1]}, label[0])
-                                                       :html('label', {'for':id}, label)
+                                                       ?HTML('label', {'for':id, 'class':label[1]}, label[0])
+                                                       :HTML('label', {'for':id}, label)
                                                   )+
-                                                  html(
+                                                  HTML(
                                                        'div',
                                                        {'class':'input-group','style':'width:auto'}
                                                             ,((sticker)
                                                                  ?((Array.isArray(sticker))
                                                                       ?((sticker[1] !== "append")
-                                                                           ?html('div',{'class':'input-group-'+sticker[1]}, sticker[0])+
-                                                                           html(tag, `class="form-control ${template}"`+attr_append(attr, base_attr), content)
-                                                                           :html(tag, `class="form-control ${template}"`+attr_append(attr, base_attr), content)+
-                                                                           html('div',{'class':'input-group-'+sticker[1]}, sticker[0])
+                                                                           ?HTML('div',{'class':'input-group-'+sticker[1]}, sticker[0])+
+                                                                           HTML(tag, `class="form-control ${template}"`+attr_append(attr, base_attr), content)
+                                                                           :HTML(tag, `class="form-control ${template}"`+attr_append(attr, base_attr), content)+
+                                                                           HTML('div',{'class':'input-group-'+sticker[1]}, sticker[0])
                                                                       )
-                                                                      :html('div',{'class':'input-group-prepend'}, sticker)+
-                                                                      html(tag, `class="form-control ${template}"`+attr_append(attr, base_attr), content)
+                                                                      :HTML('div',{'class':'input-group-prepend'}, sticker)+
+                                                                      HTML(tag, `class="form-control ${template}"`+attr_append(attr, base_attr), content)
                                                                  )
-                                                                 :html(tag, `class="form-control ${template}"`+attr_append(attr, base_attr), content)
+                                                                 :HTML(tag, `class="form-control ${template}"`+attr_append(attr, base_attr), content)
                                                        )
                                                   )+
-                                                  ((style && style.length > 0)?(html	(
+                                                  ((style && style.length > 0)?(HTML	(
                                                        'style',
                                                        '',
                                                        style
@@ -95,32 +95,32 @@ function Input(input = '') {
                           },
                          //  {
                          //       "condition" : is_array(label),
-                         //       "line"      : html('label', {'for':id, 'class':label[1]}, label[0])
+                         //       "line"      : HTML('label', {'for':id, 'class':label[1]}, label[0])
                                                   
                          //  },
                          //  {
                          //       "condition" : !is_array(label),
-                         //       "line"      : html('label', {'for':id}, label)
+                         //       "line"      : HTML('label', {'for':id}, label)
                          //  },
                          //  {
                          //       "condition" : true,
-                         //       "line"      : html(
+                         //       "line"      : HTML(
                          //                          'div',
                          //                          {'class':'input-group','style':'width:auto'}
                          //                               ,((sticker)
                          //                                    ?((Array.isArray(sticker) && sticker[1] !== "append")
-                         //                                         ?html('div',{'class':'input-group-'.sticker[1]}, sticker[0])+
-                         //                                         html(tag, 'class="form-control"'.attr_append(attr, base_attr), content)
-                         //                                         :html(tag, 'class="form-control"'.attr_append(attr, base_attr), content)+
-                         //                                         html('div',{'class':'input-group-'.sticker[1]}, sticker[0])
+                         //                                         ?HTML('div',{'class':'input-group-'.sticker[1]}, sticker[0])+
+                         //                                         HTML(tag, 'class="form-control"'.attr_append(attr, base_attr), content)
+                         //                                         :HTML(tag, 'class="form-control"'.attr_append(attr, base_attr), content)+
+                         //                                         HTML('div',{'class':'input-group-'.sticker[1]}, sticker[0])
                          //                                    )
-                         //                                    :html('div',{'class':'input-group-prepend'}, sticker)
+                         //                                    :HTML('div',{'class':'input-group-prepend'}, sticker)
                          //                               )
                          //                          )
                          //  },
                          //  {
                          //       "condition" : sticker && is_array(sticker),
-                         //       "line"      : html(tag, 'class="form-control"'.attr_append(attr), content)
+                         //       "line"      : HTML(tag, 'class="form-control"'.attr_append(attr), content)
                          //  },
                          //  {
                          //       "condition" : sticker && is_array(sticker) && sticker[1] !== "append",
@@ -128,7 +128,7 @@ function Input(input = '') {
                          //  },
                          //  {
                          //       "condition" : sticker && is_array(sticker),
-                         //       "line"      : html('div',{'class':'input-group-'.sticker[1]}, sticker[0])
+                         //       "line"      : HTML('div',{'class':'input-group-'.sticker[1]}, sticker[0])
                          //  },
                          //  {
                          //       "condition" : sticker && is_array(sticker),
@@ -136,11 +136,11 @@ function Input(input = '') {
                          //  },
                          //  {
                          //      "condition" : sticker && is_array(sticker),
-                         //      "line"      : html('/')
+                         //      "line"      : HTML('/')
                          //  },
                          //  {
                          //       "condition" : sticker && !is_array(sticker),
-                         //       "line"      : html('div',{'class':'input-group-prepend'}, sticker)
+                         //       "line"      : HTML('div',{'class':'input-group-prepend'}, sticker)
                          //  },
                          //  {
                          //       "condition" : sticker && !is_array(sticker),
@@ -148,15 +148,15 @@ function Input(input = '') {
                          //  },
                          //  {
                          //       "condition" : sticker,
-                         //       "line"      : html('/')
+                         //       "line"      : HTML('/')
                          //  },
                          //  {
                          //       "condition" : true,
-                         //       "line"      : html('/')
+                         //       "line"      : HTML('/')
                          //  },
                          //  {
                          //      "condition" : tag === "input",
-                         //      "line"      : html(tag,"class='form-control template' ".attr_append(attr, {
+                         //      "line"      : HTML(tag,"class='form-control template' ".attr_append(attr, {
                          //                         "type"              :  "text",
                          //                         "placeholder"       :  "example placeholder",
                          //                         "aria-label"        :  "example",
@@ -167,7 +167,7 @@ function Input(input = '') {
                          // },
                          //  {
                          //      "condition" : tag !== "input",
-                         //      "line"      : html(tag,"class='form-control template' ".attr_append(attr, {
+                         //      "line"      : HTML(tag,"class='form-control template' ".attr_append(attr, {
                          //                         "type"              :  "text",
                          //                         "placeholder"       :  "example placeholder",
                          //                         "aria-label"        :  "example",
@@ -181,23 +181,23 @@ function Input(input = '') {
                          // },
                          // {
                          //      "condition" : tag !== "input",
-                         //      "line"      : html(tag,'/')
+                         //      "line"      : HTML(tag,'/')
                          // },
                          //  {
                          //      "condition" : !empty(script),
-                         //      "line"      : html('script').script.html('script','/')
+                         //      "line"      : HTML('script').script.HTML('script','/')
                          // },
                          // {
                          //      "condition" : !empty(style),
-                         //      "line"      : html('style').style.html('style','/')
+                         //      "line"      : HTML('style').style.HTML('style','/')
                          // },
                          //  {
                          //       "condition" : true,
-                         //       "line"      : html('/')
+                         //       "line"      : HTML('/')
                          //  },
                          //  {
                          //       "condition" : true,
-                         //       "line"      : html('/')
+                         //       "line"      : HTML('/')
                          //  },
                          ]);
 }

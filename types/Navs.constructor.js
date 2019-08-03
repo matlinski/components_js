@@ -1,82 +1,72 @@
 import Component from './Component.constructor.js'
 import attr_append from '../utilities/attr.append.js'
 import compiler from '../utilities/compiler.js'
-import html from '../utilities/html.func.js'
+import HTML from '../utilities/HTML.func.js'
 
 
-function f_navs($content, $active, $disabled){
-    $content_compiler = '';
-    foreach($content as $key => $value) {
-                     $value = explode('href', $value);
+function f_navs(content, active, disabled){
+    let content_compiler = '';
+    if(Array.isArray(content) && content[0].match('href')){
+        content.forEach(function(value,key){
+            value = value.split('href');
 
-                     if (($key+1) == $active) {
-                         $value[0] .= 'class ="nav-link active" ';
+            if ((key+1) == active) {
+                value[0] += 'class ="nav-link active" ';
 
-                     } elseif (($key+1) == $disabled) {
-                         $value[0] .= 'class ="nav-link disabled" ';
+            } else if ((key+1) == disabled) {
+                value[0] += 'class ="nav-link disabled" ';
 
-                     } else {
-                         $value[0] .= 'class ="nav-link" ';
-                     }
-                     $value = implode('href', $value);
-                     $content_compiler .= html('li', ['class'=>'nav-item']).$value.html('li', '/');
-                 }
-                 return $content_compiler;
+            } else {
+                value[0] += 'class ="nav-link" ';
+            }
+            value = value.join('href');
+            content_compiler += HTML('li', {'class':'nav-item'}, value);
+        }) 
+    } else {
+        content_compiler = 'Please set the content as an array, each element has to have a href attribute';
+    }
+    
+    return content_compiler;
    }
-function Navs($input = "") {
-$base_class = "nav";
 
-$default = [
-                "content"   => 
-                    [
-                        html('a',['href'=>'home.html']).
-                            'Home'.
-                        html('a','/'),
-                        html('a',['href'=>'about.html']).
-                            'About us'.
-                        html('a','/'),
-                        html('a',['href'=>'contact.html']).
-                            'Contact'.
-                        html('a','/')
-                    ],
-                'active'    =>  2,
-                'disabled'  =>  1,
-                "attr"      =>  "",
-                "template"  =>  "nav-tabs",
-                "style"     =>  "",
-                "script"    =>  ""
-            ];
-            foreach(Component($input, $default, $base_class) as $key => $value) {
-                $$key = $value;
-           }
-           
-           $scheme =   [
-                          [
-                               "condition" => true,
-                               "line"      => html('ul',"id='$id' class='$base_class 
-                                                $template' ".attr_append($attr))
-                          ],
-                          [
-                               "condition" => is_array($content),
-                               "line"      => f_navs($content, $active, $disabled)
-                          ],
-                          [
-                               "condition" => !is_array($content),
-                               "line"      => 'Please set the content as an array'
-                          ],
-                          [
-                               "condition" => !empty($script),
-                               "line"      => html('script').$script.html('script','/')
-                          ],
-                          [
-                                "condition" => !empty($style),
-                                "line"      => html('style').$style.html('style','/')
-                          ],
-                          [
-                               "condition" => true,
-                               "line"      => html('ul','/')
-                          ],
-                       ];
-                       
-           return Compiler($base_class, $scheme);
+
+function Navs(input = '') {
+const {
+    content,
+    tag,
+    attr,
+    template,
+    active,
+    disabled,
+    style,
+    id
+} = Component(input, {
+    content:    [
+                    HTML('a',{'href':'home.HTML'}, 'Home'),
+                    HTML('a',{'href':'about.HTML'}, 'About us'),
+                    HTML('a',{'href':'contact.HTML'}, 'Contact')
+                ],
+    tag: 'ul',
+    attr: '',
+    template: 'nav-tabs',
+    active: 2,
+    disabled: 1,
+    style: ''
+}, 'nav');
+
+return compiler([
+        {
+        "condition" : true,
+        "line"      : HTML(tag,`id='${id}' class='nav 
+                        ${template}' `+attr_append(attr),
+                        f_navs(content, active, disabled)+
+                        ((style && style.length > 0)?(HTML(
+                            'style',
+                            '',
+                            style
+                        )) :'')
+                        )
+        },
+    ]);
 }
+export default Navs;

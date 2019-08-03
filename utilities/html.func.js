@@ -1,4 +1,4 @@
-function html(tag="div", attr="", content=""){
+function HTML(tag="div", attr="", content=""){
     let compiler = "";
     const singleGroup = ['area', 'base', 'br', 'col', 'command', 'embed', 'hr', 'img', 'input', 'keygen', 'link', 'meta', 'param', 'source', 'track', 'wbr'];
     compiler += '<'+tag;
@@ -21,4 +21,4 @@ function html(tag="div", attr="", content=""){
         return compiler;
     }
 }
-export default html;
+export default HTML;

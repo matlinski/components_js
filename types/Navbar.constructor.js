@@ -1,49 +1,37 @@
 import Component from './Component.constructor.js'
 import attr_append from '../utilities/attr.append.js'
 import compiler from '../utilities/compiler.js'
-import html from '../utilities/html.func.js'
+import HTML from '../utilities/HTML.func.js'
 
-function Navbar($input = "") {
-$base_class = "navbar";
-
-$default = [
-            "content"   =>  html('h1',['class'=>'navbar-brand']).
-                                'Content placeholder'.
-                            html('h1','/'),
-            "attr"      =>  "",
-            "template"  =>  "navbar-light bg-light",
-            "style"     =>  "",
-            "script"    =>  ""
-        ];
-
-        foreach(Component($input, $default, $base_class) as $key => $value) {
-            $$key = $value;
-       }
+function Navbar(input = '') {
+	const {
+		content,
+		tag,
+		attr,
+		template,
+		style,
+		id
+	} = Component(input, {
+		content: HTML('h1',{'class':'navbar-brand'}, 'Content placeholder'),
+		tag: 'nav',
+		attr: '',
+		template: 'navbar-light bg-light',
+		style: ''
+	}, 'navbar');
        
-       $scheme =   [
-                      [
-                           "condition" => true,
-                           "line"      => html('nav',"id='$id' class='$base_class 
-                           $template' ".attr_append($attr)
-                           )
-                      ],
-                      [
-                           "condition" => true,
-                           "line"      => $content
-                      ],
-                      [
-                         "condition" => !empty($script),
-                         "line"      => html('script').$script.html('script','/')
-                         ],
-                         [
-                              "condition" => !empty($style),
-                              "line"      => html('style').$style.html('style','/')
-                         ],
-                      [
-                           "condition" => true,
-                           "line"      => html('nav','/')
-                      ],
-                   ];
-                   
-       return Compiler($base_class, $scheme);
+     return compiler([
+                      {
+                           "condition" : true,
+                           "line"      : HTML(tag,`id='${id}' class='navbar 
+                           ${template}' `+attr_append(attr),
+                           content
+                           )+
+                           ((style && style.length > 0)?(HTML	(
+                              'style',
+                              '',
+                              style
+                         )) :'')
+                      }
+                    ]);
 }
+export default Navbar;

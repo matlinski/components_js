@@ -1,7 +1,7 @@
 import Component from './Component.constructor.js'
 import attr_append from '../utilities/attr.append.js'
 import compiler from '../utilities/compiler.js'
-import html from '../utilities/html.func.js'
+import HTML from '../utilities/HTML.func.js'
 function f_breadcrumb(content){
     if(Array.isArray(content)){
             let content_compiler = "";
@@ -10,11 +10,11 @@ function f_breadcrumb(content){
             
                 if (i === content.length ) {
                     content_compiler += 
-                    html('li', {'class': 'breadcrumb-item active','aria-current': 'page'}, value)
+                    HTML('li', {'class': 'breadcrumb-item active','aria-current': 'page'}, value)
                 
                 }	else	{
                     content_compiler += 
-                    html('li', {'class': 'breadcrumb-item'}, value)
+                    HTML('li', {'class': 'breadcrumb-item'}, value)
                 } 
             i++;
             }) 
@@ -35,8 +35,8 @@ function Breadcrumb(input = '') {
 		id
 	} = Component(input, {
 		content: [
-                    html('a',{'href':'home.html'}, 'home'),
-                    html('a',{'href':'library.html'}, 'library'),
+                    HTML('a',{'href':'home.HTML'}, 'home'),
+                    HTML('a',{'href':'library.HTML'}, 'library'),
                     'data'
                 ],
 		attr: '',
@@ -55,9 +55,9 @@ function Breadcrumb(input = '') {
 	return compiler([
 		{
             "condition" :  true,
-            "line"      :  html('ul',`id='${id}' class='breadcrumb 
+            "line"      :  HTML('ul',`id='${id}' class='breadcrumb 
                              ${template}' `+attr_append(attr),
-                             f_breadcrumb(content)+((style && style.length > 0)?html('style','', style):'')
+                             f_breadcrumb(content)+((style && style.length > 0)?HTML('style','', style):'')
                              )
        }
     ])

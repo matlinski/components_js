@@ -1,7 +1,7 @@
 import Component from './Component.constructor.js'
 import attr_append from '../utilities/attr.append.js'
 import compiler from '../utilities/compiler.js'
-import html from '../utilities/html.func.js'
+import HTML from '../utilities/HTML.func.js'
 
 function Badge(input = '') {
 	const {
@@ -27,7 +27,7 @@ function Badge(input = '') {
     return compiler([
 		{
             "condition" : true,
-            "line"      : html(tag,`id='${id}' class='badge ${template}' `+attr_append(attr, base_attr), content + ((style && style.length > 0)?(html	(
+            "line"      : HTML(tag,`id='${id}' class='badge ${template}' `+attr_append(attr, base_attr), content + ((style && style.length > 0)?(HTML	(
                 'style',
                 '',
                 style

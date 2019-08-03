@@ -1,7 +1,7 @@
 import Component from './Component.constructor.js'
 import attr_append from '../utilities/attr.append.js'
 import compiler from '../utilities/compiler.js'
-import html from '../utilities/html.func.js'
+import HTML from '../utilities/HTML.func.js'
 import rand from '../utilities/rand.func.js'
 function Card(input = '') {
 	const {
@@ -13,13 +13,13 @@ function Card(input = '') {
 		style,
 		id
 	} = Component(input, {
-		content:  html('h5', '',"Title placeholder")+
-                    html('p', '', "Body placeholder")+
-                    html('button',{'class':'btn btn-primary'}, 'Click here'),
+		content:  HTML('h5', '',"Title placeholder")+
+                    HTML('p', '', "Body placeholder")+
+                    HTML('button',{'class':'btn btn-primary'}, 'Click here'),
 		tag: 'div',
 		attr: '',
 		template: 'col-lg-3 col-md-5 col-sm-7 col-12',
-		image: html('img',{'width':'100%', 'src':'https://source.unsplash.com/'+rand(320,370)+'x350/', 'alt':'...'}),
+		image: HTML('img',{'width':'100%', 'src':'https://source.unsplash.com/'+rand(320,370)+'x350/', 'alt':'...'}),
 		style:    `&>img{
                          "background-size: cover;
                          "border-top-left-radius: calc(+25rem - 1px);
@@ -30,11 +30,11 @@ function Card(input = '') {
      return compiler([
                          {
                                "condition" : true,
-                               "line"      : html(
+                               "line"      : HTML(
                                     tag,
                                     `id='${id}' class='card ${template}' `+attr_append(attr),
-                                    image+html('div', {'class':'card-body'}, content)+
-                                    ((style && style.length > 0)?(html	(
+                                    image+HTML('div', {'class':'card-body'}, content)+
+                                    ((style && style.length > 0)?(HTML	(
                                         'style',
                                         '',
                                         style

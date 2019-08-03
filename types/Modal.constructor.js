@@ -1,129 +1,70 @@
 import Component from './Component.constructor.js'
 import attr_append from '../utilities/attr.append.js'
 import compiler from '../utilities/compiler.js'
-import html from '../utilities/html.func.js'
+import HTML from '../utilities/HTML.func.js'
 
-function Modal($input = "") {
-$base_class = "modal";
-
-$default = [
-            "header"    =>  html('h5', ['class'=>'modal-title']).
-                                'Header placeholder'.
-                            html('h5', '/'),
-
-            "body"      =>  html('p').
-                                'Body placeholder'.
-                            html('p', '/'),
-
-            "footer"    =>  html('button', ['class'=>'btn btn-primary']).
-                                'Take action!'.
-                            html('button', '/'),
-
-            "trigger_id"=>  "myID",
-            "attr"      =>  '',
-            "template"  =>  "fade",
-            "style"     =>  "",
-            "script"    =>  ""
-          ];
-
-          foreach(Component($input, $default, $base_class) as $key => $value) {
-            $$key = $value;
-       }
-       $script .= 
-         '$(\'#myModal\').on(\'shown.bs.modal\', function () {
-             $(\'#myInput\').trigger(\'focus\')
-         })';
-       
-       $scheme =   [
-                      [
-                           "condition" => true,
-                           "line"      => html('div',"id='$trigger_id' class='$base_class 
-                                        $template' ".attr_append($attr, [
-                                             "tabindex"    =>  "-1",
-                                             "role"        =>  "dialog",
-                                             "aria-hidden" =>  "true"
-                                         ])
+function Modal(input = '') {
+     const {
+          header,
+          body,
+          footer,
+          attr,
+          template,
+          trigger_id,
+          style,
+          id
+     } = Component(input, {
+          header: HTML('h5', { 'class': 'modal-title' }, 'Header placeholder'),
+          body: HTML('p', '', 'Body placeholder'),
+          footer: HTML('button', { 'class': 'btn btn-primary' }, 'Take action!'),
+          attr: '',
+          template: 'fade',
+          trigger_id: 'myID',
+          style: ''
+     }, 'modal');
+     return compiler([
+          {
+               "condition": true,
+               "line": HTML('div', `id='${trigger_id}' class='modal 
+                                             ${template}' `+attr_append(attr, {
+                    "tabindex": "-1",
+                    "role": "dialog",
+                    "aria-hidden": "true"
+               }),
+                    HTML('div',
+                         { 'class': 'modal-dialog', 'role': 'document' },
+                         HTML('div',
+                              { 'class': 'modal-content' },
+                              HTML('div',
+                                   { 'class': 'modal-header' },
+                                   header +
+                                   HTML('button',
+                                        { 'type': 'button', 'class': 'close', 'data-dismiss': 'modal', 'aria-label': 'Close' },
+                                        HTML('span',
+                                             { 'aria-hidden': 'true' },
+                                             '&times;'
                                         )
-                      ],
-                      [
-                           "condition" => true,
-                           "line"      => html('div',['class'=>'modal-dialog', 'role'=>'document'])
-                      ],
-                      [
-                           "condition" => true,
-                           "line"      => html('div',['class'=>'modal-content'])
-                      ],
-                      [
-                           "condition" => true,
-                           "line"      => html('div',['class'=>'modal-header'])
-                      ],
-                      [
-                           "condition" => true,
-                           "line"      => $header
-                      ],
-                      [
-                           "condition" => true,
-                           "line"      => html('button', ['type'=>'button','class'=>'close', 'data-dismiss'=>'modal','aria-label'=>'Close']).
-                                                  html('span',['aria-hidden'=>'true']).
-                                                       '&times;'
-                                                  .html('span','/').
-                                             html('button', '/')
-                      ],
-                      [
-                           "condition" => true,
-                           "line"      => html('/')
-                      ],
-                      [
-                           "condition" => true,
-                           "line"      => html('div',['class'=>'modal-body'])
-                      ],
-                      [
-                           "condition" => true,
-                           "line"      => $body
-                      ],
-                      [
-                           "condition" => true,
-                           "line"      => html('/')
-                      ],
-                      [
-                           "condition" => true,
-                           "line"      => html('div',['class'=>'modal-footer'])
-                      ],
-                      [
-                           "condition" => true,
-                           "line"      => html('button', ['type'=>'button','class'=>'btn btn-secondary', 'data-dismiss'=>'modal']).
-                                                       'Close'.
-                                             html('button', '/')
-                      ],
-                      [
-                           "condition" => true,
-                           "line"      => $footer
-                      ],
-                      [
-                           "condition" => true,
-                           "line"      => html('/')
-                      ],
-                      [
-                           "condition" => true,
-                           "line"      => html('/')
-                      ],
-                      [
-                           "condition" => true,
-                           "line"      => html('/')
-                      ],
-                      [
-                         "condition" => !empty($script),
-                         "line"      => html('script').$script.html('script','/')
-                      ],
-                      [
-                         "condition" => !empty($style),
-                         "line"      => html('style').$style.html('style','/')
-                      ],
-                      [
-                          "condition" => true,
-                          "line"      => html('/')
-                      ],
-                   ];
-                   
-       return Compiler($base_class, $scheme);
+                                   )
+                              ) +
+                              HTML('div',
+                                   { 'class': 'modal-body' },
+                                   body
+                              ) +
+                              HTML('div',
+                                   { 'class': 'modal-footer' },
+                                             HTML('button',
+                                        { 'type': 'button', 'class': 'btn btn-secondary', 'data-dismiss': 'modal' },
+                                        'Close') + footer
+                              )
+                         )
+                    )+
+                    ((style && style.length > 0)?(HTML	(
+                         'style',
+                         '',
+                         style
+                    )) :'')
+               )
+          },
+     ]);
 }
+export default Modal;

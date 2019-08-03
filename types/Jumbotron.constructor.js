@@ -1,7 +1,7 @@
 import Component from './Component.constructor.js'
 import attr_append from '../utilities/attr.append.js'
 import compiler from '../utilities/compiler.js'
-import html from '../utilities/html.func.js'
+import HTML from '../utilities/HTML.func.js'
 
 function Jumbotron(input = '') {
 	const {
@@ -13,9 +13,9 @@ function Jumbotron(input = '') {
 		style,
 		id
 	} = Component(input, {
-		header: html('h1', {'class':'display-4'}, 'Header placeholder'),
-		body: html('p', {'class':'lead'}, 'This is a body placeholder.')+
-               html('button', {'class':'btn btn-primary'}, 'Take action!'),
+		header: HTML('h1', {'class':'display-4'}, 'Header placeholder'),
+		body: HTML('p', {'class':'lead'}, 'This is a body placeholder.')+
+               HTML('button', {'class':'btn btn-primary'}, 'Take action!'),
 		tag: 'div',
 		attr: '',
 		template: 'jumbotron-fluid',
@@ -29,12 +29,12 @@ function Jumbotron(input = '') {
      return compiler([
                           {
                                "condition" : true,
-                               "line"      : html(tag,`id='${id}' class='jumbotron 
+                               "line"      : HTML(tag,`id='${id}' class='jumbotron 
                                ${template}' `+attr_append(attr),
-                               html('div',
+                               HTML('div',
                                {'class':'container'},
                                header+body)+
-                              ((style && style.length > 0)?(html	(
+                              ((style && style.length > 0)?(HTML	(
                                    'style',
                                    '',
                                    style

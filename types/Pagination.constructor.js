@@ -1,100 +1,90 @@
 import Component from './Component.constructor.js'
 import attr_append from '../utilities/attr.append.js'
 import compiler from '../utilities/compiler.js'
-import html from '../utilities/html.func.js'
+import HTML from '../utilities/HTML.func.js'
 
-function f_pagination($links, $interface, $active){
-    $links_compiler = '';
-       if(is_array($links)){
-        $i = 1;
+function f_pagination(links, inter, active) {
+    let links_compiler = '';
+    if (Array.isArray(links)) {
+        let i = 1;
 
-            if ($interface) {
-                    $links_compiler .= 
-                    html('li',['class'=>'page-item'.(($i == $active)?' disabled':''), ]).
-                        html('a',['class'=>'page-link', 'href'=>(($i != $active)?$links[$active-2] :'#')]);
-                    if (is_array($interface)) {
-                        $links_compiler .= $interface[0];
-                    }   else    {
-                        $links_compiler .= 'previous';
-                    }
-                    $links_compiler .= html('a','/').html('li','/');
-            } 
-            foreach($links as $value) {
-                    $links_compiler .= 
-                    html('li',['class'=>'page-item'.(($i == $active)?' active':''), ]).
-                        html('a',['class'=>'page-link', 'href'=>$value]).
-                            $i.
-                        html('a','/').
-                    html('li', '/');
-                $i++;
-            }
-            if ($interface) {
-                $links_compiler .= 
-                html('li',['class'=>'page-item'.(($i == $active+1)?' disabled':''), ]).
-                    html('a',['class'=>'page-link', 'href'=>(($i != $active+1)?$links[$active] :'#')]);
-                if (is_array($interface)) {
-                    $links_compiler .= $interface[1];
-                }   else    {
-                    $links_compiler .= 'previous';
-                }
-                $links_compiler .= html('a','/').html('li','/');
-        } 
-       } else {
-            $links_compiler = 'Please set the links as an array';
-       }                   
-       return $links_compiler;
-   }
+        if (inter) {
+            links_compiler +=
+                HTML('li',
+                    { 'class': 'page-item' + ((i == active) ? ' disabled' : '') },
+                    HTML('a',
+                        { 'class': 'page-link', 'href': ((i != active) ? links[active - 2] : '#') },
+                        ((Array.isArray(inter))
+                            ? inter[0]
+                            : 'previous'
+                        )
+                    )
+                )
 
-function Pagination($input = "") {
-$base_class = "pagination";
+        };
 
-$default = [
-                "links"     => 
-                    [
-                        '#id1',
-                        '#id2',
-                        '#id3'
-                    ],
-                "active"    =>  3,
-                "interface" =>  
-                    [
-                        "previous",
-                        "next"
-                    ],
-                "attr"      => "",
-                "template"  =>"justify-links-left",
-                "style"     => "",
-                "script"    => ""
-            ];
+        links.forEach(function (value) {
+            links_compiler +=
+                HTML('li',
+                    { 'class': 'page-item' + ((i == active) ? ' active' : '') },
+                    HTML('a', { 'class': 'page-link', 'href': value }, i)
+                )
+            i++;
+        })
+        if (inter) {
+            links_compiler +=
+                HTML('li',
+                    { 'class': 'page-item' + ((i == active + 1) ? ' disabled' : '') },
+                    HTML('a',
+                        { 'class': 'page-link', 'href': (((i != active + 1) ? links[active] : '#')) },
+                        ((Array.isArray(inter))
+                            ? inter[1]
+                            : 'next'
+                        )
+                    )
+                )
 
-            foreach(Component($input, $default, $base_class) as $key => $value) {
-                $$key = $value;
-           }
-           
-           
-           $scheme =   [
-                          [
-                               "condition" => true,
-                               "line"      => html('ul',"id='$id' class='$base_class 
-                                                $template' ".attr_append($attr))
-                          ],
-                          [
-                               "condition" => true,
-                               "line"      => f_pagination($links, $interface, $active)
-                          ],
-                          [
-                               "condition" => !empty($script),
-                               "line"      => html('script').$script.html('script','/')
-                          ],
-                          [
-                               "condition" => !empty($style),
-                               "line"      => html('style').$style.html('style','/')
-                          ],
-                          [
-                               "condition" => true,
-                               "line"      => html('ul','/')
-                          ],
-                       ];
-                       
-           return Compiler($base_class, $scheme);
+        };
+    } else {
+        links_compiler = 'Please set the links as an array';
+    }
+    return links_compiler;
 }
+
+function Pagination(input = '') {
+    const {
+        links,
+        tag,
+        attr,
+        template,
+        active,
+        inter,
+        style,
+        id
+    } = Component(input, {
+        links: [
+            '#id1',
+            '#id2',
+            '#id3'
+        ],
+        tag: 'ul',
+        attr: '',
+        template: 'justify-links-left',
+        active: 3,
+        inter: [
+            "previous",
+            "next"
+        ],
+        style: ''
+    }, 'pagination');
+
+    return compiler([
+        {
+            "condition": true,
+            "line": HTML(tag, `id='${id}' class='pagination ${template}' ` + attr_append(attr),
+                f_pagination(links, inter, active)
+            )
+        },
+    ]);
+}
+export default Pagination;

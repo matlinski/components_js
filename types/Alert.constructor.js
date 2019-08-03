@@ -1,7 +1,7 @@
 import Component from './Component.constructor.js'
 import attr_append from '../utilities/attr.append.js'
 import compiler from '../utilities/compiler.js'
-import html from '../utilities/html.func.js'
+import HTML from '../utilities/HTML.func.js'
 
 function Alert(input = '') {
 	const {
@@ -23,12 +23,12 @@ function Alert(input = '') {
 	return compiler([
 		{
 			condition: true,
-			line: html	(
+			line: HTML	(
 							tag,
 							`id="${id}" class="alert ${template}"`+
 							attr_append(attr, { role: 'alert' }),
 							content+
-							((style && style.length > 0)?(html	(
+							((style && style.length > 0)?(HTML	(
 										'style',
 										'',
 										style
@@ -36,7 +36,7 @@ function Alert(input = '') {
 									(
 										(dismisable)
 										?(
-											html(
+											HTML(
 												'button',
 													{
 														type: 'button',
@@ -44,7 +44,7 @@ function Alert(input = '') {
 														'data-dismiss': 'alert',
 														'aria-label': 'close'
 													},
-														html(
+														HTML(
 																'span',
 																{'aria-hidden': 'true'},
 																'&times;'

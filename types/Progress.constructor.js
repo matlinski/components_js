@@ -1,58 +1,46 @@
 import Component from './Component.constructor.js'
 import attr_append from '../utilities/attr.append.js'
 import compiler from '../utilities/compiler.js'
-import html from '../utilities/html.func.js'
+import HTML from '../utilities/HTML.func.js'
 
-function Progress($input = "") {
-$base_class = "progress";
-
-$default = [
-                "progress"  =>  25,
-                "min"       =>  0,
-                "max"       =>  100,
-                "template"  =>  "bg-success",
-                "attr"      =>  "",
-                "style"     =>  "",
-                "script"    =>  ""
-            ];
-
-foreach(Component($input, $default, $base_class) as $key => $value) {
-    $$key = $value;
-}
-           
-           $scheme =   [
-                          [
-                               "condition" => true,
-                               "line"      => html('div',"id='$id' class='$base_class'
-                                 style='width: $max.% ' ".attr_append($attr)
+function Progress(input = '') {
+	const {
+		progress,
+		attr,
+		template,
+		min,
+		max,
+		percent,
+		style,
+		id
+	} = Component(input, {
+		progress: 25,
+		attr: '',
+		template: 'bg-success',
+		min: 0,
+          max: 100,
+          percent: false,
+		style: ''
+	}, 'progress');
+      
+     return compiler([
+                          {
+                               "condition" : true,
+                               "line"      : HTML('div',`id='${id}' class='${progress}'
+                                 style='width: ${max}% ' `+attr_append(attr),
+                                 HTML('div', {
+                                        'class':'progress-bar '+template,
+                                        'role':'progressbar',
+                                        'aria-valuenow':progress,
+                                        'aria-valuemin':min,
+                                        'aria-valuemax':max,
+                                        'style':'width: '+(progress/max*100)+'%'
+                                   }, ((percent)
+                                        ?Math.floor(progress/max*100)+'%'
+                                        :`${progress} / ${max}`
+                                   ))
                                )
-                          ],
-                          [
-                               "condition" => true,
-                               "line"      => html('div', [
-                                                  'class'=>'progress-bar '.$template,
-                                                  'role'=>'progressbar',
-                                                  'aria-valuenow'=>$progress,
-                                                  'aria-valuemin'=>$min,
-                                                  'aria-valuemax'=>$max,
-                                                  'style'=>'width: '.($progress/$max*100).'%'
-                                                  ])."$progress%".html('/')
-                                             
-                          ],
-                          [
-                              "condition" => !empty($script),
-                              "line"      => html('script').$script.html('script','/')
-                         ],
-                         [
-                              "condition" => !empty($style),
-                              "line"      => html('style').$style.html('style','/')
-                         ],
-                          [
-                               "condition" => true,
-                               "line"      => html('/')
-                          ]
-                       ];
-                       
-           return Compiler($base_class, $scheme);
-           
+                          }
+                       ]);
 }
+export default Progress;

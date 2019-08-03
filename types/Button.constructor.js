@@ -2,7 +2,7 @@ import Component from './Component.constructor.js'
 import attr_append from '../utilities/attr.append.js'
 import secondary_id from '../utilities/secondary_id.js'
 import compiler from '../utilities/compiler.js'
-import html from '../utilities/html.func.js'
+import HTML from '../utilities/HTML.func.js'
 function Button(input = '') {
 	let {
 		content,
@@ -107,14 +107,14 @@ function Button(input = '') {
           return compiler([
                          {
                               "condition" : dropdown && !collapse && !tooltip && !popover,
-                              "line"      : html('div', {'class':'dropdown'},
-                              html(tag,`id='${id}' class='btn ${template}' `+
-                              attr_append(attr, base_attr), content + ((style && style.length > 0)?(html	(
+                              "line"      : HTML('div', {'class':'dropdown'},
+                              HTML(tag,`id='${id}' class='btn ${template}' `+
+                              attr_append(attr, base_attr), content + ((style && style.length > 0)?(HTML	(
                               'style',
                               '',
                               style
                               )) :''))+((dropdown && !Array.isArray(dropdown))
-                              ?html('div',{'class':'dropdown-menu'}, dropdown) 
+                              ?HTML('div',{'class':'dropdown-menu'}, dropdown) 
                               :(function(){
                                 let drop_compilator = "";
                                   if(Array.isArray(dropdown)){
@@ -125,7 +125,7 @@ function Button(input = '') {
                                              drop_compilator += value;
                                          }
                                     })
-                                    drop_compilator = html('div',{'class':'dropdown-menu'}, drop_compilator);
+                                    drop_compilator = HTML('div',{'class':'dropdown-menu'}, drop_compilator);
                                   } else {
                                       drop_compilator = dropdown;
                                   }
@@ -137,7 +137,7 @@ function Button(input = '') {
                          },
                          {
                               "condition" : !dropdown,
-                              "line"      : html(tag,`id='${id}' class='btn ${template}' `+attr_append(attr, base_attr), content + ((style && style.length > 0)?(html	(
+                              "line"      : HTML(tag,`id='${id}' class='btn ${template}' `+attr_append(attr, base_attr), content + ((style && style.length > 0)?(HTML	(
                               'style',
                               '',
                               style
@@ -145,7 +145,7 @@ function Button(input = '') {
                          },
                           {
                                "condition" : collapse && !dropdown && !tooltip && !popover,
-                               "line"      : html('div',{'class':'collapse navbar-collapse', 'id':s_id}, collapse)
+                               "line"      : HTML('div',{'class':'collapse navbar-collapse', 'id':s_id}, collapse)
                          }
                        ]);
 }
