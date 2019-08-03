@@ -11,8 +11,7 @@ function Alert(input = '') {
 		template,
 		dismisable,
 		style,
-		id,
-		parent
+		id
 	} = Component(input, {
 		content: 'Content placeholder',
 		tag: 'div',

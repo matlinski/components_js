@@ -11,8 +11,7 @@ function Card(input = '') {
 		template,
 		image,
 		style,
-		id,
-		parent
+		id
 	} = Component(input, {
 		content:  html('h5', '',"Title placeholder")+
                     html('p', '', "Body placeholder")+

@@ -3,6 +3,9 @@ import Badge from './types/Badge.constructor.js';
 import Breadcrumb from './types/Breadcrumb.constructor.js';
 import Card from './types/Card.constructor.js';
 import Button from './types/Button.constructor.js';
+import Carousel from './types/Carousel.constructor.js';
+import Input from './types/Input.constructor.js';
+import Jumbotron from './types/Jumbotron.constructor.js';
 
 const Write = function(s){
     var scripts = document.getElementsByTagName('script');
@@ -27,6 +30,15 @@ const component = {
                 $('[data-toggle="popover"]').popover()
                 $('[data-toggle="tooltip"]').tooltip()
                 $('.dropdown-toggle').dropdown()
+            },
+    Carousel: function(input){
+                Write(Carousel(input))
+            },
+    Input: function(input){
+                Write(Input(input))
+            },
+    Jumbotron: function(input){
+                Write(Jumbotron(input))
             }
 }
-export {Button, Alert, Badge, Breadcrumb, Card,component as default}
+export {Button, Alert, Badge, Breadcrumb, Card, Carousel, Input, Jumbotron, component as default}

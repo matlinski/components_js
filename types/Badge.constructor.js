@@ -3,7 +3,7 @@ import attr_append from '../utilities/attr.append.js'
 import compiler from '../utilities/compiler.js'
 import html from '../utilities/html.func.js'
 
-function Badge(input = '', parent = 'body') {
+function Badge(input = '') {
 	const {
 		content,
 		tag,
