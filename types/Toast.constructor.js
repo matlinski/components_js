@@ -50,13 +50,13 @@ function Toast(input = '') {
                                    'aria-hidden': 'true'
                               }, '&times;')
                          )
-                    )+
-                    HTML('div', { 'class': 'toast-body' }, body)+
-                    ((style && style.length > 0)?(HTML	(
+                    ) +
+                    HTML('div', { 'class': 'toast-body' }, body) +
+                    ((style && style.length > 0) ? (HTML(
                          'style',
                          '',
                          style
-                    )) :'')
+                    )) : '')
                )
           }
      ]);

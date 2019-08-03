@@ -26,7 +26,7 @@ function Modal(input = '') {
           {
                "condition": true,
                "line": HTML('div', `id='${trigger_id}' class='modal 
-                                             ${template}' `+attr_append(attr, {
+                                             ${template}' ` + attr_append(attr, {
                     "tabindex": "-1",
                     "role": "dialog",
                     "aria-hidden": "true"
@@ -52,17 +52,17 @@ function Modal(input = '') {
                               ) +
                               HTML('div',
                                    { 'class': 'modal-footer' },
-                                             HTML('button',
+                                   HTML('button',
                                         { 'type': 'button', 'class': 'btn btn-secondary', 'data-dismiss': 'modal' },
                                         'Close') + footer
                               )
                          )
-                    )+
-                    ((style && style.length > 0)?(HTML	(
+                    ) +
+                    ((style && style.length > 0) ? (HTML(
                          'style',
                          '',
                          style
-                    )) :'')
+                    )) : '')
                )
           },
      ]);

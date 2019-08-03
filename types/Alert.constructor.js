@@ -23,37 +23,37 @@ function Alert(input = '') {
 	return compiler([
 		{
 			condition: true,
-			line: HTML	(
-							tag,
-							`id="${id}" class="alert ${template}"`+
-							attr_append(attr, { role: 'alert' }),
-							content+
-							((style && style.length > 0)?(HTML	(
-										'style',
-										'',
-										style
-									)) :'')+
-									(
-										(dismisable)
-										?(
-											HTML(
-												'button',
-													{
-														type: 'button',
-														class: 'close',
-														'data-dismiss': 'alert',
-														'aria-label': 'close'
-													},
-														HTML(
-																'span',
-																{'aria-hidden': 'true'},
-																'&times;'
-															)
-												)
-										) 
-										:''
-									)
+			line: HTML(
+				tag,
+				`id="${id}" class="alert ${template}"` +
+				attr_append(attr, { role: 'alert' }),
+				content +
+				((style && style.length > 0) ? (HTML(
+					'style',
+					'',
+					style
+				)) : '') +
+				(
+					(dismisable)
+						? (
+							HTML(
+								'button',
+								{
+									type: 'button',
+									class: 'close',
+									'data-dismiss': 'alert',
+									'aria-label': 'close'
+								},
+								HTML(
+									'span',
+									{ 'aria-hidden': 'true' },
+									'&times;'
+								)
+							)
 						)
+						: ''
+				)
+			)
 		}
 	]);
 }
